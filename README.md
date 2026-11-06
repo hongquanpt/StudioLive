@@ -1,21 +1,32 @@
 # StudioLive — 5 Cảnh Tương Tác Trực Tiếp Cho TikTok LIVE
 
+[![TikTok](https://img.shields.io/badge/TikTok-@hongquan__pt-000000?logo=tiktok&logoColor=white)](https://www.tiktok.com/@hongquan_pt)
+[![GitHub](https://img.shields.io/badge/GitHub-hongquanpt-181717?logo=github&logoColor=white)](https://github.com/hongquanpt)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 ![Platform](https://img.shields.io/badge/Platform-Windows%20%7C%20macOS-lightgrey)
 ![Node](https://img.shields.io/badge/Node.js-18%2B-339933)
-![Electron](https://img.shields.io/badge/Electron-Desktop%20App-47848F)
 
 Ứng dụng máy tính tạo **5 phòng tương tác tự động theo thời gian thực cho TikTok LIVE**, chạy hoàn toàn trên máy của bạn (không cần lộ mặt, không cần Stream Key). Người xem chỉ cần vào phòng, bình luận, thả tim hoặc tặng quà là lập tức hoá thân thành nhân vật trên màn hình cùng giọng đọc AI dẫn dắt tự động.
 
+> 🎬 **Khám phá thêm nhiều phần mềm hay:** Để theo dõi các bản cập nhật mới nhất và xem thêm nhiều phần mềm, công cụ thú vị khác, hãy nhấn Follow kênh TikTok của mình tại **[@hongquan_pt](https://www.tiktok.com/@hongquan_pt)** nhé!
+
 > ⚠️ **Đọc kỹ [Tuyên bố miễn trừ trách nhiệm](DISCLAIMER.md) trước khi sử dụng.** Nghiêm cấm dùng StudioLive để lừa đảo, trục lợi, lợi dụng tín ngưỡng, vi phạm bản quyền hay livestream trái pháp luật.
 
-![Bảng điều khiển](docs/screenshots/dashboard.png)
+![Bảng điều khiển StudioLive](docs/screenshots/dashboard.png)
 
 ---
 
 ## 🌟 5 Chế Độ Tương Tác ("5 Trong 1")
 
 Mở tab cảnh nào trong ứng dụng thì cảnh đó hiển thị trực tiếp trên buổi live (khung dọc chuẩn Full HD `1080 × 1920`, nằm gọn trong vùng an toàn của TikTok):
+
+| 📚 Lớp Học Chữ | 🪩 Đi Bar Online |
+|---|---|
+| ![Lớp Học Chữ](docs/screenshots/lop-hoc-chu.png) | ![Đi Bar Online](docs/screenshots/di-bar-online.png) |
+
+| 🪷 Đi Chùa Online | 🎬 Rạp Phim Online | 👻 Live Ma Online |
+|---|---|---|
+| ![Đi Chùa Online](docs/screenshots/di-chua-online.png) | ![Rạp Phim Online](docs/screenshots/rap-phim-online.png) | ![Live Ma Online](docs/screenshots/live-ma-online.png) |
 
 ### 1. 📚 Lớp Học Chữ (`overlay/lop.js`)
 - **Kho 2.076 câu đố tiếng Việt** chia **30 chủ đề** (Trường lớp, Con vật, Món ăn Việt, Ca dao thành ngữ, Địa danh, Gen Z, Tuổi thơ 8x 9x…) kết hợp câu hỏi **Tiếng Anh, Đố mẹo, Lịch sử**, xen kẽ **4 bài Toán tính nhẩm** (câu 5, 10, 15, 19) và **Câu Hỏi Vàng ×2 điểm** ở câu 20.
@@ -41,10 +52,6 @@ Mở tab cảnh nào trong ứng dụng thì cảnh đó hiển thị trực ti�
 ### 5. 👻 Live Ma Online (`overlay/game.js`)
 - **Ngôi nhà ma tương tác:** Người xem hoá ma bay trong phòng, gõ `hù` / `trốn` / `tìm` / `bùa` / `gọi hồn` / `tắt đèn` / `ôm` / `nhảy` / `cười` / `khóc`… chơi cùng nhau và với Ma NPC.
 - Quà lớn triệu hồi **Bà Ma + Jumpscare**; vòng **TRỐN TÌM** tự động định kỳ; **8 kiểu âm thanh nền rùng rợn** (*U ám, Gió hú, Mưa đêm, Nhà thờ hoang, Hồi hộp, Hộp nhạc ma, Thì thầm, Rừng đêm*) hoặc chế độ nền trong suốt đè lên camera.
-
-| 👻 Live Ma Online | 🪷 Đi Chùa Online | 🎬 Rạp Phim Online |
-|---|---|---|
-| ![Live Ma Online](docs/screenshots/live-ma-online.png) | ![Đi Chùa Online](docs/screenshots/di-chua-online.png) | ![Rạp Phim Online](docs/screenshots/rap-phim-online.png) |
 
 ---
 
@@ -142,15 +149,16 @@ build/icon.png         Biểu tượng ứng dụng
 - Các thư viện và tài nguyên bên thứ ba giữ nguyên giấy phép gốc: xem **[docs/THIRD_PARTY_NOTICES.md](docs/THIRD_PARTY_NOTICES.md)**.
 - Việc sử dụng phần mềm phải tuân thủ **[Tuyên bố miễn trừ trách nhiệm (DISCLAIMER.md)](DISCLAIMER.md)**. StudioLive không liên kết với TikTok / ByteDance.
 
-## 👤 Tác Giả
+## 👤 Tác Giả & Kênh Theo Dõi
 
 **hongquanpt**
-- GitHub: [@hongquanpt](https://github.com/hongquanpt)
-- Repository: [github.com/hongquanpt/StudioLive](https://github.com/hongquanpt/StudioLive)
+- 🎵 **TikTok:** [@hongquan_pt](https://www.tiktok.com/@hongquan_pt) — *Hãy theo dõi kênh TikTok của mình để xem hướng dẫn sử dụng trực quan và cập nhật thêm nhiều phần mềm mới hơn nhé!*
+- 💻 **GitHub:** [@hongquanpt](https://github.com/hongquanpt)
+- 📦 **Repository:** [github.com/hongquanpt/StudioLive](https://github.com/hongquanpt/StudioLive)
 
 ## ☕ Mời Tác Giả Ly Cà Phê
 
-Nếu StudioLive giúp ích cho bạn, có thể mời mình một ly cà phê để có thêm động lực phát triển tiếp. Hoàn toàn tự nguyện — ứng dụng vẫn miễn phí cho tất cả mọi người. Cảm ơn bạn! 💚
+Nếu StudioLive giúp ích cho bạn, có thể mời mình một ly cà phê để có thêm động lực phát triển thêm nhiều phần mềm mới. Hoàn toàn tự nguyện — ứng dụng vẫn miễn phí cho tất cả mọi người. Cảm ơn bạn! 💚
 
 <p align="center">
   <img src="docs/screenshots/donate-qr.jpg" alt="Mã QR ủng hộ (VietQR / Napas 247)" width="260">
