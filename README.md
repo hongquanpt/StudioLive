@@ -1,68 +1,58 @@
-# StudioLive
+# StudioLive — 5 Cảnh Tương Tác Trực Tiếp Cho TikTok LIVE
 
-[![Release](https://img.shields.io/github/v/release/hongquanpt/StudioLive)](https://github.com/hongquanpt/StudioLive/releases/latest)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
-![Platform](https://img.shields.io/badge/platform-macOS%20%7C%20Windows-lightgrey)
+![Platform](https://img.shields.io/badge/Platform-Windows%20%7C%20macOS-lightgrey)
+![Node](https://img.shields.io/badge/Node.js-18%2B-339933)
+![Electron](https://img.shields.io/badge/Electron-Desktop%20App-47848F)
 
-App máy tính tạo **cảnh tương tác cho TikTok LIVE**, chạy hoàn toàn trên máy của bạn. Mã nguồn mở, miễn phí — ai cũng có thể tải về dùng hoặc phát triển thêm.
+Ứng dụng máy tính tạo **5 phòng tương tác tự động theo thời gian thực cho TikTok LIVE**, chạy hoàn toàn trên máy của bạn (không cần lộ mặt, không cần Stream Key). Người xem chỉ cần vào phòng, bình luận, thả tim hoặc tặng quà là lập tức hoá thân thành nhân vật trên màn hình cùng giọng đọc AI dẫn dắt tự động.
 
-> ⚠️ **Đọc [Tuyên bố miễn trừ trách nhiệm](DISCLAIMER.md) trước khi dùng.** Nghiêm cấm dùng StudioLive để lừa đảo, trục lợi, lợi dụng tín ngưỡng hay livestream vi phạm pháp luật.
+> ⚠️ **Đọc kỹ [Tuyên bố miễn trừ trách nhiệm](DISCLAIMER.md) trước khi sử dụng.** Nghiêm cấm dùng StudioLive để lừa đảo, trục lợi, lợi dụng tín ngưỡng, vi phạm bản quyền hay livestream trái pháp luật.
 
 ![Bảng điều khiển](docs/screenshots/dashboard.png)
 
-## Tính năng
+---
 
-- **👻 Live Ma Online** — người xem hoá ma, gõ `hù` / `trốn` / `tìm` / `bùa` / `gọi hồn` / `tắt đèn`… để chơi với nhau; quà lớn gọi Bà Ma + jumpscare; vòng TRỐN TÌM định kỳ.
-- **🪷 Đi Chùa Online** — chánh điện; người xem ngồi bồ đoàn, gõ `adidaphat` lên thắp hương; quà làm sen vàng nở, giọng đọc cảm ơn và chúc; thả tim đủ mục tiêu thì mưa hoa sen.
-- **🎬 Rạp Phim Online** — phòng chiếu phim; người xem được chào, vào ghế ngồi; chiếu danh sách phim (link YouTube, .mp4/.webm hoặc file trên máy); lệnh `vỗ tay` / `haha` / `wow` / `bắp`; quà = ghế VIP; đủ tim = mưa bắp rang. 4 kiểu phòng: Cổ điển, VIP Gold, IMAX, Gia đình.
+## 🌟 5 Chế Độ Tương Tác ("5 Trong 1")
 
-Mở tab nào thì cảnh đó chạy trên live.
+Mở tab cảnh nào trong ứng dụng thì cảnh đó hiển thị trực tiếp trên buổi live (khung dọc chuẩn Full HD `1080 × 1920`, nằm gọn trong vùng an toàn của TikTok):
+
+### 1. 📚 Lớp Học Chữ (`overlay/lop.js`)
+- **Kho 2.076 câu đố tiếng Việt** chia **30 chủ đề** (Trường lớp, Con vật, Món ăn Việt, Ca dao thành ngữ, Địa danh, Gen Z, Tuổi thơ 8x 9x…) kết hợp câu hỏi **Tiếng Anh, Đố mẹo, Lịch sử**, xen kẽ **4 bài Toán tính nhẩm** (câu 5, 10, 15, 19) và **Câu Hỏi Vàng ×2 điểm** ở câu 20.
+- **Cô Giáo Hoài My AI** tự đọc đề (phát âm chuẩn cả tiếng Việt lẫn tiếng Anh), hô *"Bắt đầu!"* mới mở ô chữ & đếm ngược; tự động cộng thêm +10 giây & mở chữ gợi ý khi cả lớp chưa giải ra; tuyên dương & phát quà sau câu 5, 10, 15; hỗ trợ tổ chức sinh nhật ngay trên lớp.
+- **4 dãy bàn gỗ dài (30 chỗ ngồi)** tự xếp chỗ theo điểm tiết + **60 chỗ đứng cửa lớp**, tuỳ chọn 2 kiểu nhân vật (*Avatar TikTok tròn quàng khăn đỏ* hoặc *Học sinh quay lưng 10 kiểu tóc*) và **5 tông màu phòng học**.
+- **5 trò Giờ Ra Chơi** luân phiên: *Oẳn tù tì, Kiểm tra miệng, Chọn phe 1/2, Điểm danh "có mặt", Thử thách thả tim*.
+- Khách tặng quà ôm bó hoa lên bục cắm vào bình, quà lớn mở chữ cứu cả lớp. Hỗ trợ tự soạn thêm câu hỏi riêng, lưu chuỗi điểm danh chuyên cần, Bảng Vàng tuần và trang **Báo cáo buổi live** (`/lop-bao-cao`).
+
+### 2. 🪩 Đi Bar Online (`overlay/bar.js`)
+- **Sân khấu Nightclub / Vinahouse 2× HiDPI:** Người xem chỉ cần bình luận bất kỳ là hoá thành nhân vật Meme hoạt hình gắn **Avatar TikTok phát sáng** bước vào sàn nhảy xuyên suốt buổi live.
+- **Tương tác bằng bình luận (tuỳ chỉnh được từ khoá):** `lên chính` (bước lên tâm điểm sân khấu), `pháo hoa`, `nhảy 1 cái`, `camera`, `đổi nv`, `đi vòng` (cả sàn đi bão), `phi công`, `ghép đôi`, `ngộ không`, `vua`, `123 dzô`…
+- **Bàn điều khiển DJ & MC AI:** 4 tông ánh sáng (*Cyber Neon, Vinahouse, Galaxy VIP, Rooftop*), MC đọc tên chào khách mới, chúc mừng ghép đôi, vinh danh đại gia (*Bá Chủ, Á Vương, Tam Hoàng*), bắn pháo hoa, xả khói CO2, đại tiệc Laser & Bass Drop.
+- **Nhạc sàn linh hoạt:** Beat EDM 128 BPM / Lounge Chill 110 BPM tự tạo sạch bản quyền, hoặc dán trực tiếp **link YouTube / SoundCloud / MP3** và chọn file nhạc trên máy.
+
+### 3. 🪷 Đi Chùa Online (`overlay/temple.js`)
+- **Chánh điện thanh tịnh 2× HiDPI:** Người xem hoá Phật tử ngồi bồ đoàn (6 kiểu nhân vật), bình luận từ khoá (`adidaphat`, `thỉnh chuông`, `gõ mõ`, `hoa sen`, `hoan hỷ`, `mưa hoa` — cho phép thêm/sửa cụm từ riêng) để lên dâng hương, thỉnh chuông, gõ mõ hoặc gửi **Sớ Cầu An**.
+- Quà tặng làm nở đài sen vàng kèm giọng đọc cảm ơn và chúc bình an; đủ mốc tim nổ mưa cánh sen; 4 chế độ âm thanh chánh điện (*Tắt nhạc nền, Chuông xoay tịnh tâm, Nhịp mõ tịnh niệm, Nhạc MP3 tự chọn*).
+
+### 4. 🎬 Rạp Phim Online (`overlay/rap.js`)
+- **Phòng chiếu 84 ghế:** Đón chào người xem bước vào ghế ngồi xem chung danh sách phát (link YouTube, link `.mp4`/`.webm` hoặc file video trên máy).
+- Gõ `vỗ tay` / `haha` / `wow` / `bắp` để tung hiệu ứng cảm xúc; tặng quà lên **ghế VIP vàng**; đủ mốc tim nổ mưa bắp rang. Có **4 phong cách phòng chiếu**: *Cổ điển, VIP Gold, IMAX, Gia đình* cùng chế độ tắt đèn rạp.
+
+### 5. 👻 Live Ma Online (`overlay/game.js`)
+- **Ngôi nhà ma tương tác:** Người xem hoá ma bay trong phòng, gõ `hù` / `trốn` / `tìm` / `bùa` / `gọi hồn` / `tắt đèn` / `ôm` / `nhảy` / `cười` / `khóc`… chơi cùng nhau và với Ma NPC.
+- Quà lớn triệu hồi **Bà Ma + Jumpscare**; vòng **TRỐN TÌM** tự động định kỳ; **8 kiểu âm thanh nền rùng rợn** (*U ám, Gió hú, Mưa đêm, Nhà thờ hoang, Hồi hộp, Hộp nhạc ma, Thì thầm, Rừng đêm*) hoặc chế độ nền trong suốt đè lên camera.
 
 | 👻 Live Ma Online | 🪷 Đi Chùa Online | 🎬 Rạp Phim Online |
 |---|---|---|
 | ![Live Ma Online](docs/screenshots/live-ma-online.png) | ![Đi Chùa Online](docs/screenshots/di-chua-online.png) | ![Rạp Phim Online](docs/screenshots/rap-phim-online.png) |
 
-## Tải & cài đặt (người dùng)
+---
 
-Tải bản cài sẵn tại **[Releases v1.0.0](https://github.com/hongquanpt/StudioLive/releases/tag/v1.0.0)**:
+## 🚀 Cài Đặt & Chạy Ứng Dụng
 
-| Máy | File tải |
-|---|---|
-| Mac chip Apple (M1, M2, M3, M4…) | [`StudioLive-1.0.0-mac-arm64.dmg`](https://github.com/hongquanpt/StudioLive/releases/download/v1.0.0/StudioLive-1.0.0-mac-arm64.dmg) |
-| Mac chip Intel | [`StudioLive-1.0.0-mac-x64.dmg`](https://github.com/hongquanpt/StudioLive/releases/download/v1.0.0/StudioLive-1.0.0-mac-x64.dmg) |
-| Windows 10/11 64-bit | [`StudioLive-Setup-1.0.0-win-x64.exe`](https://github.com/hongquanpt/StudioLive/releases/download/v1.0.0/StudioLive-Setup-1.0.0-win-x64.exe) |
+### Cách 1: Chạy trực tiếp từ mã nguồn (Khuyên dùng / Nhà phát triển)
 
-Không biết Mac chip gì: bấm  → **Giới thiệu về máy Mac** — “Chip: Apple M…” là chip Apple, “Bộ xử lý: Intel…” là chip Intel.
-
-### macOS (12 trở lên)
-
-1. Mở file `.dmg`, **kéo StudioLive vào thư mục Applications**.
-2. Vào **Applications**, **chuột phải (Control + bấm) vào StudioLive → Mở → Mở**. App chưa ký số Apple nên lần đầu macOS hỏi lại, chỉ cần làm một lần.
-3. Vẫn bị chặn: **Cài đặt hệ thống → Quyền riêng tư & Bảo mật → Vẫn mở (Open Anyway)**.
-4. Báo **“StudioLive bị hỏng và không thể mở”**: mở **Terminal**, chạy lệnh rồi mở lại app:
-
-   ```bash
-   xattr -cr /Applications/StudioLive.app
-   ```
-
-### Windows
-
-1. Chạy `StudioLive-Setup-1.0.0-win-x64.exe` → chọn thư mục → **Install**.
-2. Nếu hiện **“Windows đã bảo vệ PC của bạn”** (SmartScreen, do app chưa ký số): bấm **More info → Run anyway**.
-3. Mở **StudioLive** từ Desktop hoặc menu Start.
-
-### Lên live lần đầu
-
-1. **Chọn cảnh**: bấm tab 👻 Ma / 🪷 Chùa / 🎬 Rạp ở menu trái.
-2. **Thêm vào TikTok LIVE Studio**: khung **dọc**, thêm nguồn **Link** `http://lvh.me:3000`, kích thước **1080 × 1920**, kéo phủ kín khung. (LIVE Studio không nhận `localhost`; `lvh.me` luôn trỏ về chính máy bạn.)
-3. Bấm **Go LIVE** trên TikTok LIVE Studio.
-4. **Kết nối**: ở Bảng điều khiển nhập username TikTok (không cần @) → **Kết nối**.
-
-Chưa live vẫn thử được bằng các nút **Gửi thử** trong từng tab. Hướng dẫn đầy đủ (chất lượng hình, OBS, mẹo khi live, xử lý lỗi): **[docs/HUONG-DAN-CAI-DAT.md](docs/HUONG-DAN-CAI-DAT.md)**.
-
-## Chạy từ mã nguồn (nhà phát triển)
-
-Cần **Node.js 18+** và **git**.
+Yêu cầu cài sẵn **[Node.js 18+](https://nodejs.org/)** và **Git**.
 
 ```bash
 git clone https://github.com/hongquanpt/StudioLive.git
@@ -71,55 +61,99 @@ npm install
 npm start
 ```
 
-Đóng gói bản cài (không ký số):
+### Cách 2: Tải bộ cài đóng gói sẵn (Người dùng phổ thông)
+
+Nếu có bản phát hành đóng gói sẵn tại mục **[Releases](https://github.com/hongquanpt/StudioLive/releases)**:
+
+- **Windows 10/11 (64-bit):** Chạy file `StudioLive-Setup-<phiên_bản>-win-x64.exe` → chọn thư mục → **Install**. *(Nếu SmartScreen hiện cảnh báo do app chưa ký số: bấm **More info → Run anyway**).*
+- **macOS 12+ (Apple Silicon `arm64` / Intel `x64`):** Mở file `.dmg`, kéo **StudioLive** vào **Applications** → chuột phải chọn **Mở (Open)**. Nếu báo *"StudioLive bị hỏng và không thể mở"*, chạy lệnh sau trong Terminal rồi mở lại:
+  ```bash
+  xattr -cr /Applications/StudioLive.app
+  ```
+
+---
+
+## 📺 Hướng Dẫn Đưa Lên TikTok LIVE (4 Bước)
+
+1. **Chọn cảnh:** Mở StudioLive, bấm chọn 1 trong 5 tab cảnh (👻 Ma / 🪷 Chùa / 🪩 Bar / 📚 Lớp / 🎬 Rạp) ở thanh bên trái.
+2. **Thêm vào TikTok LIVE Studio (hoặc OBS):**
+   - **TikTok LIVE Studio:** Chọn khung **dọc (9:16)** → Thêm nguồn **Link** → dán `http://lvh.me:3000` → đặt kích thước **`1080 × 1920`**, kéo phủ vừa khít khung. *(Dùng `lvh.me` vì LIVE Studio chặn chữ `localhost`; `lvh.me` luôn trỏ về chính máy bạn).*
+   - **OBS Studio:** Thêm nguồn **Browser** → dán `http://localhost:3000`, kích thước **`1080 × 1920`**, bật *Control audio via OBS*.
+3. **Bấm Go LIVE** trên TikTok LIVE Studio / OBS.
+4. **Kết nối phòng live:** Quay lại tab **Bảng điều khiển** của StudioLive, nhập `username` kênh TikTok đang live (không cần `@`) → bấm **Kết nối**. *(Nếu phòng live 18+ hoặc bị TikTok hỏi xác minh, bấm nút **🔑 Đăng nhập TikTok** ngay cạnh để đăng nhập một lần).*
+
+> 💡 **Mẹo:** Khi chưa bật live thật, bạn vẫn có thể trải nghiệm toàn bộ hiệu ứng và giọng đọc bằng các nút **Gửi thử** trong từng tab cảnh. Xem hướng dẫn chi tiết cách chỉnh nét, chống bạc màu và xử lý lỗi tại **[docs/HUONG-DAN-CAI-DAT.md](docs/HUONG-DAN-CAI-DAT.md)**.
+
+---
+
+## 🛠️ Lệnh Đóng Gói & Công Cụ Đi Kèm
 
 ```bash
-npm run dist:mac   # .dmg + .zip cho arm64 và x64
-npm run dist:win   # bộ cài NSIS x64
+# Chạy ứng dụng chế độ phát triển
+npm start
+
+# Đóng gói bộ cài Windows (.exe NSIS x64 trong thư mục dist/)
+npm run dist:win
+
+# Đóng gói bộ cài macOS (.dmg + .zip cho arm64 và x64 trong thư mục dist/)
+npm run dist:mac
+
+# Tự động quay & xuất video quảng cáo Full HD 1080x1920 kèm giọng AI
+npm run promo -- --contact "Zalo / Hotline: 09xx.xxx.xxx"
 ```
 
-Chi tiết: [docs/BUILD.md](docs/BUILD.md).
+Chi tiết đóng gói và kiểm thử tự động (`STUDIO_SELFTEST`): xem **[docs/BUILD.md](docs/BUILD.md)**.
 
-### Cấu trúc
+---
 
+## 📂 Cấu Trúc Dự Án
+
+```text
+src/main.js            Tiến trình chính Electron: cửa sổ, IPC, dữ liệu thử, tự kiểm tra
+src/live.js            Quản lý kết nối TikTok LIVE, chuẩn hoá sự kiện, tự kết nối lại
+src/direct.js          Đọc sự kiện phòng live qua trình duyệt ẩn + giải mã protobuf (tiktok-live-connector 2.0.0)
+src/server.js          Server Express + Socket.IO (127.0.0.1) phát overlay, proxy nhạc & /api/tts, /lop-bao-cao
+src/tts.js             Giọng đọc AI tiếng Việt & tiếng Anh (Microsoft Edge TTS, tự chuyển dự phòng Google TTS)
+src/settings.js        Quản lý & lưu trữ cấu hình người dùng trong thư mục userData
+src/lopStore.js        Lưu sổ lớp học, câu hỏi đã dùng/bỏ qua, chuỗi chuyên cần & báo cáo buổi live
+src/preload.js         Cầu nối IPC an toàn giữa tiến trình chính và giao diện điều khiển
+renderer/              Giao diện bảng điều khiển (index.html, app.js, styles.css)
+overlay/               Màn hình phát trực tiếp 1080×1920:
+  ├── lop.js, lop-data.js   Cảnh Lớp Học Chữ & kho 2.076 câu đố 30 chủ đề
+  ├── bar.js                Cảnh Đi Bar Online (Nightclub / Meme Avatar / DJ)
+  ├── temple.js             Cảnh Đi Chùa Online & thư mục tài nguyên chua-assets/
+  ├── rap.js                Cảnh Rạp Phim Online
+  ├── game.js, faces.js     Cảnh Live Ma Online
+  └── audio.js, overlay.js  Bộ tổng hợp âm thanh WebAudio, điều phối cảnh & giọng đọc
+promo/                 Công cụ tự động tạo video giới thiệu & bộ kịch bản đăng bài
+docs/                  Hướng dẫn cài đặt, hướng dẫn đóng gói & thông báo bản quyền bên thứ ba
+build/icon.png         Biểu tượng ứng dụng
 ```
-src/main.js       Tiến trình chính: cửa sổ, IPC, dữ liệu thử, tự kiểm tra (STUDIO_SELFTEST)
-src/live.js       Quản lý kết nối TikTok, chuẩn hoá sự kiện, tự kết nối lại
-src/direct.js     Đọc sự kiện qua trình duyệt ẩn + giải mã protobuf (tiktok-live-connector 2.0.0, MIT)
-src/server.js     Server overlay Express + Socket.IO (chỉ 127.0.0.1) + giọng đọc /api/tts
-src/tts.js        Giọng đọc tiếng Việt (Microsoft Edge, dự phòng Google)
-src/settings.js   Lưu cài đặt trong thư mục userData
-renderer/         Giao diện điều khiển
-overlay/          Trang hiển thị trên live: game.js (Nhà Ma), temple.js (Đi Chùa), rap.js (Rạp Phim), faces.js, audio.js
-overlay/chua-assets/  Ảnh, nhân vật, hiệu ứng, nhạc của cảnh Đi Chùa
-build/icon.png    Icon app
-```
 
-Cài đặt người dùng lưu tại `~/Library/Application Support/StudioLive/settings.json` (macOS), `%APPDATA%\StudioLive\settings.json` (Windows).
+- Dữ liệu cài đặt lưu tại: `%APPDATA%\StudioLive\settings.json` (Windows) hoặc `~/Library/Application Support/StudioLive/settings.json` (macOS).
+- Lưu ý: Giữ `tiktok-live-connector` ở phiên bản **`2.0.0`** (giấy phép MIT); các bản mới hơn chuyển sang AGPL-3.0.
 
-> Lưu ý: giữ `tiktok-live-connector` ở **2.0.0** (MIT). Các bản mới hơn dùng giấy phép AGPL-3.0.
+---
 
-### Đóng góp
+## 🤝 Đóng Góp & Giấy Phép
 
-Chào mừng mọi đóng góp: fork repo → tạo nhánh → commit → mở Pull Request. Báo lỗi hoặc đề xuất tính năng tại [Issues](https://github.com/hongquanpt/StudioLive/issues).
+- Mọi đóng góp đều được chào đón: Fork repository → tạo nhánh mới → commit → mở Pull Request, hoặc báo lỗi/đề xuất tính năng tại **[Issues](https://github.com/hongquanpt/StudioLive/issues)**.
+- Mã nguồn phát hành theo giấy phép **[MIT](LICENSE)** — © 2026 **[hongquanpt](https://github.com/hongquanpt)**.
+- Các thư viện và tài nguyên bên thứ ba giữ nguyên giấy phép gốc: xem **[docs/THIRD_PARTY_NOTICES.md](docs/THIRD_PARTY_NOTICES.md)**.
+- Việc sử dụng phần mềm phải tuân thủ **[Tuyên bố miễn trừ trách nhiệm (DISCLAIMER.md)](DISCLAIMER.md)**. StudioLive không liên kết với TikTok / ByteDance.
 
-## Giấy phép & miễn trừ trách nhiệm
-
-- Mã nguồn phát hành theo giấy phép **[MIT](LICENSE)** — © 2026 [hongquanpt](https://github.com/hongquanpt).
-- Thư viện & tài nguyên bên thứ ba giữ giấy phép riêng: [docs/THIRD_PARTY_NOTICES.md](docs/THIRD_PARTY_NOTICES.md).
-- **[DISCLAIMER.md](DISCLAIMER.md)** — phần mềm chỉ phục vụ giải trí, học tập. Người dùng tự chịu hoàn toàn trách nhiệm về nội dung livestream; tác giả không chịu trách nhiệm cho mọi hành vi lừa đảo, trục lợi, lợi dụng tín ngưỡng, vi phạm bản quyền hay vi phạm pháp luật của người sử dụng. StudioLive không liên kết với TikTok / ByteDance.
-
-## Tác giả
+## 👤 Tác Giả
 
 **hongquanpt**
 - GitHub: [@hongquanpt](https://github.com/hongquanpt)
+- Repository: [github.com/hongquanpt/StudioLive](https://github.com/hongquanpt/StudioLive)
 
-## ☕ Mời tác giả ly cà phê
+## ☕ Mời Tác Giả Ly Cà Phê
 
-Nếu StudioLive giúp ích cho bạn, có thể mời mình một ly cà phê để có thêm động lực phát triển tiếp. Hoàn toàn tự nguyện — app vẫn miễn phí cho tất cả mọi người. Cảm ơn bạn! 💚
+Nếu StudioLive giúp ích cho bạn, có thể mời mình một ly cà phê để có thêm động lực phát triển tiếp. Hoàn toàn tự nguyện — ứng dụng vẫn miễn phí cho tất cả mọi người. Cảm ơn bạn! 💚
 
 <p align="center">
   <img src="docs/screenshots/donate-qr.jpg" alt="Mã QR ủng hộ (VietQR / Napas 247)" width="260">
 </p>
 
-<p align="center"><sub>Quét bằng app ngân hàng bất kỳ hỗ trợ VietQR / Napas 247.</sub></p>
+<p align="center"><sub>Quét bằng ứng dụng ngân hàng bất kỳ hỗ trợ VietQR / Napas 247.</sub></p>
