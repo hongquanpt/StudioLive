@@ -1,0 +1,111 @@
+{
+  "name": "studio-live",
+  "productName": "StudioLive",
+  "version": "1.0.0",
+  "description": "StudioLive — cảnh tương tác cho TikTok LIVE: Live Ma Online, Đi Chùa Online & Rạp Phim Online",
+  "main": "src/main.js",
+  "scripts": {
+    "start": "electron .",
+    "promo": "electron promo/tao-video-quang-cao.js",
+    "dist:mac": "electron-builder --mac",
+    "dist:win": "electron-builder --win"
+  },
+  "author": "hongquanpt (https://github.com/hongquanpt)",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.21.2",
+    "msedge-tts": "^2.1.0",
+    "socket.io": "^4.8.1",
+    "tiktok-live-connector": "2.0.0"
+  },
+  "devDependencies": {
+    "electron": "45.2.1",
+    "electron-builder": "^26.0.12"
+  },
+  "build": {
+    "appId": "vn.studiolive.app",
+    "productName": "StudioLive",
+    "copyright": "© 2026 hongquanpt",
+    "directories": {
+      "output": "dist",
+      "buildResources": "build"
+    },
+    "files": [
+      "src/**/*",
+      "renderer/**/*",
+      "overlay/**/*",
+      "package.json"
+    ],
+    "asar": true,
+    "mac": {
+      "category": "public.app-category.video",
+      "target": [
+        {
+          "target": "dmg",
+          "arch": [
+            "arm64",
+            "x64"
+          ]
+        },
+        {
+          "target": "zip",
+          "arch": [
+            "arm64",
+            "x64"
+          ]
+        }
+      ],
+      "identity": "-",
+      "hardenedRuntime": false,
+      "gatekeeperAssess": false,
+      "artifactName": "StudioLive-${version}-mac-${arch}.${ext}"
+    },
+    "dmg": {
+      "title": "StudioLive ${version}"
+    },
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "icon": "build/icon.png"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "StudioLive",
+      "artifactName": "StudioLive-Setup-${version}-win-x64.${ext}"
+    },
+    "npmRebuild": false,
+    "extraResources": [
+      {
+        "from": "docs/THIRD_PARTY_NOTICES.md",
+        "to": "THIRD_PARTY_NOTICES.md"
+      },
+      {
+        "from": "docs/HUONG-DAN-CAI-DAT.md",
+        "to": "HUONG-DAN-CAI-DAT.md"
+      },
+      {
+        "from": "LICENSE",
+        "to": "LICENSE"
+      },
+      {
+        "from": "DISCLAIMER.md",
+        "to": "DISCLAIMER.md"
+      }
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hongquanpt/StudioLive.git"
+  },
+  "homepage": "https://github.com/hongquanpt/StudioLive"
+}

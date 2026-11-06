@@ -1,0 +1,1158 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self'; img-src 'self' https: data:; style-src 'self' 'unsafe-inline'; script-src 'self'; frame-src http://127.0.0.1:* http://localhost:*; connect-src 'self'">
+  <title>StudioLive</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="titlebar"></div>
+
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="logo">
+        <svg viewBox="0 0 100 100"><path d="M50 6C29 6 16 22 16 44v44l9-7 8 8 9-8 8 8 8-8 9 8 8-8 9 7V44C84 22 71 6 50 6z" fill="currentColor"/><ellipse cx="38" cy="42" rx="6" ry="9" fill="#0b0d10"/><ellipse cx="62" cy="42" rx="6" ry="9" fill="#0b0d10"/></svg>
+      </div>
+      <div>
+        <div class="brand-name">StudioLive</div>
+        <div class="brand-sub">TikTok Live Overlay</div>
+      </div>
+    </div>
+
+    <nav>
+      <button class="nav-item active" data-view="dashboard">
+        <svg viewBox="0 0 24 24"><path d="M3 13h8V3H3zm0 8h8v-6H3zm10 0h8V11h-8zm0-18v6h8V3z"/></svg>Bảng điều khiển
+      </button>
+      <button class="nav-item" data-view="ma">
+        <span class="nav-emoji">👻</span>Live Ma Online<span class="live-dot" data-live-for="ma">LIVE</span>
+      </button>
+      <button class="nav-item" data-view="chua" id="nav-chua">
+        <span class="nav-emoji">🪷</span>Đi Chùa Online<span class="live-dot" data-live-for="chua">LIVE</span>
+      </button>
+      <button class="nav-item" data-view="bar" id="nav-bar">
+        <span class="nav-emoji">🪩</span>Đi Bar Online<span class="live-dot" data-live-for="bar">LIVE</span>
+      </button>
+      <button class="nav-item" data-view="lop" id="nav-lop">
+        <span class="nav-emoji">📚</span>Lớp Học Chữ<span class="live-dot" data-live-for="lop">LIVE</span>
+      </button>
+      <button class="nav-item" data-view="rap">
+        <span class="nav-emoji">🎬</span>Rạp Phim Online<span class="live-dot" data-live-for="rap">LIVE</span>
+      </button>
+      <button class="nav-item" data-view="overlay">
+        <svg viewBox="0 0 24 24"><path d="M21 3H3a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h5v2h8v-2h5a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2zm0 14H3V5h18z"/></svg>Đưa lên live
+      </button>
+      <button class="nav-item" data-view="settings">
+        <svg viewBox="0 0 24 24"><path d="M19.14 12.94a7.1 7.1 0 0 0 0-1.88l2.03-1.58a.5.5 0 0 0 .12-.64l-1.92-3.32a.5.5 0 0 0-.6-.22l-2.39.96a7 7 0 0 0-1.63-.94l-.36-2.54a.5.5 0 0 0-.5-.42h-3.84a.5.5 0 0 0-.49.42l-.36 2.54a7.3 7.3 0 0 0-1.63.94l-2.39-.96a.5.5 0 0 0-.6.22L2.66 8.84a.5.5 0 0 0 .12.64l2.03 1.58a7.2 7.2 0 0 0 0 1.88l-2.03 1.58a.5.5 0 0 0-.12.64l1.92 3.32c.12.22.38.3.6.22l2.39-.96c.5.38 1.05.7 1.63.94l.36 2.54c.05.24.25.42.49.42h3.84c.25 0 .45-.18.5-.42l.36-2.54a7 7 0 0 0 1.63-.94l2.39.96c.22.08.48 0 .6-.22l1.92-3.32a.5.5 0 0 0-.12-.64zM12 15.6A3.6 3.6 0 1 1 12 8.4a3.6 3.6 0 0 1 0 7.2z"/></svg>Cài đặt
+      </button>
+    </nav>
+
+    <div class="side-foot">
+      <div class="srv" id="srv-box">
+        <span class="dot" id="srv-dot"></span>
+        <div>
+          <div class="srv-title">Server overlay</div>
+          <div class="srv-sub" id="srv-sub">Đang khởi động…</div>
+        </div>
+      </div>
+      <div class="ver" id="ver"></div>
+    </div>
+  </aside>
+
+  <main>
+    <!-- ================= DASHBOARD ================= -->
+    <section class="view active" id="view-dashboard">
+      <header class="page-head">
+        <div>
+          <h1>Bảng điều khiển</h1>
+          <p class="muted">Kết nối phòng live và theo dõi mọi tương tác theo thời gian thực.</p>
+        </div>
+      </header>
+
+      <div class="warn-bar" id="warn-connect">
+        <span class="warn-ico">⚠️</span>
+        <div><b>Chưa kết nối TikTok</b> — người xem vào phòng, bình luận, tặng quà sẽ <b>không hiện</b> trên cảnh live. Bật LIVE trên TikTok trước, rồi nhập username bên dưới và bấm <b>Kết nối</b>.</div>
+      </div>
+
+      <div class="warn-bar" id="warn-resolution" hidden>
+        <span class="warn-ico">🔍</span>
+        <div id="warn-res-text"></div>
+      </div>
+
+      <div class="connect-card">
+        <div class="connect-glow"></div>
+        <div class="connect-left">
+          <label class="lbl" for="username">Kênh TikTok đang live</label>
+          <div class="connect-row">
+            <div class="input-at">
+              <span>@</span>
+              <input id="username" placeholder="ten_kenh_cua_ban" autocomplete="off" spellcheck="false">
+            </div>
+            <button class="btn primary" id="btn-connect">
+              <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg><span>Kết nối</span>
+            </button>
+            <button class="btn ghost" id="btn-tt-login-quick" title="Đăng nhập TikTok khi live 18+, riêng tư hoặc bị hỏi xác minh">🔑 Đăng nhập TikTok</button>
+          </div>
+          <div class="status-line">
+            <span class="status-pill" id="status-pill"><span class="dot"></span><span id="status-text">Chưa kết nối</span></span>
+            <span class="muted small" id="status-msg"></span>
+          </div>
+        </div>
+        <div class="connect-right">
+          <div class="meta"><span class="muted small">Thời lượng</span><strong id="uptime">00:00:00</strong></div>
+          <div class="meta"><span class="muted small">Màn hình phát đang mở</span><strong id="clients">0</strong></div>
+          <div class="meta"><span class="muted small">Độ nét nguồn live</span><strong id="live-res">—</strong></div>
+        </div>
+      </div>
+
+      <div class="stats">
+        <div class="stat" style="--c:#38bdf8"><div class="stat-ico">👁</div><div><div class="stat-val" id="s-viewers">0</div><div class="stat-lbl">Người xem</div></div></div>
+        <div class="stat" style="--c:#fb7185"><div class="stat-ico">❤</div><div><div class="stat-val" id="s-likes">0</div><div class="stat-lbl">Lượt tim</div></div></div>
+        <div class="stat" style="--c:#a3e635"><div class="stat-ico">💬</div><div><div class="stat-val" id="s-comments">0</div><div class="stat-lbl">Bình luận</div></div></div>
+        <div class="stat" style="--c:#f472b6"><div class="stat-ico">🎁</div><div><div class="stat-val" id="s-gifts">0</div><div class="stat-lbl">Quà tặng</div></div></div>
+        <div class="stat" style="--c:#facc15"><div class="stat-ico">💎</div><div><div class="stat-val" id="s-diamonds">0</div><div class="stat-lbl">Kim cương</div></div></div>
+        <div class="stat" style="--c:#c084fc"><div class="stat-ico">➕</div><div><div class="stat-val" id="s-follows">0</div><div class="stat-lbl">Theo dõi mới</div></div></div>
+      </div>
+
+      <div class="grid-2">
+        <div class="panel feed-panel">
+          <div class="panel-head">
+            <h2>Hoạt động trực tiếp</h2>
+            <div class="chips" id="feed-filter">
+              <button class="chip active" data-f="all">Tất cả</button>
+              <button class="chip" data-f="chat">Chat</button>
+              <button class="chip" data-f="gift">Quà</button>
+              <button class="chip" data-f="social">Follow/Share</button>
+            </div>
+          </div>
+          <div class="feed" id="feed">
+            <div class="empty" id="feed-empty">
+              <div class="empty-ghost">👻</div>
+              <div>Chưa có hoạt động nào</div>
+              <div class="muted small">Kết nối live hoặc bấm “Gửi thử” để xem hiệu ứng.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col">
+          <div class="panel quick">
+            <div class="panel-head"><h2>Bắt đầu nhanh</h2></div>
+            <ol class="qs">
+              <li data-qs="scene"><span class="qs-n">1</span><div><b>Chọn cảnh</b><small id="qs-scene"></small></div><button class="btn ghost sm" data-goto="ma">👻 Ma</button><button class="btn ghost sm" data-goto="chua">🪷 Chùa</button><button class="btn ghost sm" data-goto="bar">🪩 Bar</button><button class="btn ghost sm" data-goto="lop">📚 Lớp</button><button class="btn ghost sm" data-goto="rap">🎬 Rạp</button></li>
+              <li data-qs="link"><span class="qs-n">2</span><div><b>Thêm vào TikTok LIVE Studio</b><small>Nguồn <b>Link</b>: <code id="qs-link">http://lvh.me:3000</code> · 1080×1920</small></div><button class="btn ghost sm" id="qs-copy">Sao chép</button></li>
+              <li data-qs="golive"><span class="qs-n">3</span><div><b>Bấm Go LIVE trên TikTok</b><small>Bật live trước khi kết nối ở bước 4</small></div></li>
+              <li data-qs="connect"><span class="qs-n">4</span><div><b>Kết nối username</b><small>Nhập @username ở trên và bấm Kết nối</small></div></li>
+            </ol>
+            <p class="hint">Chưa live vẫn thử được: vào tab cảnh và bấm các nút <b>Gửi thử</b>.</p>
+          </div>
+          <div class="panel">
+            <div class="panel-head"><h2>Top tặng quà</h2></div>
+            <ol class="leader" id="leader"><li class="muted small leader-empty">Chưa có ai tặng quà</li></ol>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= OVERLAY ================= -->
+    <section class="view" id="view-overlay">
+      <header class="page-head">
+        <div>
+          <h1>Đưa lên live</h1>
+          <p class="muted">Cách để người xem TikTok nhìn thấy cảnh đang chạy (Live Ma, Đi Chùa, Đi Bar, Lớp Học Chữ hoặc Rạp Phim Online).</p>
+        </div>
+        <div class="head-actions">
+          <button class="btn ghost" id="btn-reload-overlay">↻ Tải lại cảnh</button>
+          <button class="btn pause-btn" data-pause>⏸ Tạm dừng</button>
+        </div>
+      </header>
+      <div class="scene-row">
+        <button class="btn scene-btn ma" data-open-scene="ma"><span class="sb-ico">👻</span><span><b>Phát Live Ma Online</b><small>Chuyển live sang Nhà Ma + mở màn hình phát</small></span></button>
+        <button class="btn scene-btn chua" data-open-scene="chua"><span class="sb-ico">🪷</span><span><b>Phát Đi Chùa Online</b><small>Chuyển live sang chánh điện + mở màn hình phát</small></span></button>
+        <button class="btn scene-btn bar" data-open-scene="bar"><span class="sb-ico">🪩</span><span><b>Phát Đi Bar Online</b><small>Chuyển live sang sàn bar + mở màn hình phát</small></span></button>
+        <button class="btn scene-btn lop" data-open-scene="lop"><span class="sb-ico">📚</span><span><b>Phát Lớp Học Chữ</b><small>Chuyển live sang lớp học ghép chữ + mở màn hình phát</small></span></button>
+        <button class="btn scene-btn rap" data-open-scene="rap"><span class="sb-ico">🎬</span><span><b>Phát Rạp Phim Online</b><small>Chuyển live sang rạp phim + mở màn hình phát</small></span></button>
+      </div>
+
+      <div class="live-guide">
+        <div class="col">
+          <div class="panel">
+            <div class="panel-head"><h2>Đường dẫn overlay</h2></div>
+            <div class="url-label">TikTok LIVE Studio — nguồn <b>Link</b> (khuyên dùng)</div>
+            <div class="url-box">
+              <code id="overlay-url-studio">http://lvh.me:3000</code>
+              <button class="btn primary sm" id="btn-copy-studio">Sao chép</button>
+            </div>
+            <div class="url-label">OBS — nguồn <b>Browser</b></div>
+            <div class="url-box">
+              <code id="overlay-url">http://localhost:3000</code>
+              <button class="btn ghost sm" id="btn-copy-url">Sao chép</button>
+            </div>
+            <div class="obs-meta">
+              <div><span class="muted small">Chiều rộng</span><strong>1080</strong></div>
+              <div><span class="muted small">Chiều cao</span><strong>1920</strong></div>
+              <div><span class="muted small">Tỉ lệ</span><strong>9:16</strong></div>
+            </div>
+          </div>
+
+          <div class="panel">
+            <div class="panel-head">
+              <h2>Cách đưa lên live TikTok</h2>
+              <div class="chips" id="guide-tabs">
+                <button class="chip active" data-g="studio">TikTok LIVE Studio</button>
+                <button class="chip" data-g="obs">OBS</button>
+                <button class="chip" data-g="phone">Chỉ có điện thoại</button>
+              </div>
+            </div>
+            <div class="guide" data-guide="studio">
+              <p class="hint" style="margin:0 0 10px">Live bằng máy tính với phần mềm <b>TikTok LIVE Studio</b> (tài khoản cần được TikTok cho dùng LIVE Studio).</p>
+              <div class="sub-lbl" style="margin-top:4px">Cách 1 — nguồn Link (khuyên dùng, nhẹ máy, có sẵn âm thanh)</div>
+              <ol class="steps">
+                <li>Trong LIVE Studio chọn khung <b>dọc</b>, thêm nguồn <b>Link</b>.</li>
+                <li>Dán link <b>http://lvh.me:3000</b> (nút <b>Sao chép</b> ở trên), đặt kích thước <b>1080 × 1920</b>, kéo phủ kín khung.</li>
+                <li>Bấm <b>Go LIVE</b>, rồi ở <b>Bảng điều khiển</b> nhập username và bấm <b>Kết nối</b>.</li>
+              </ol>
+              <p class="hint">Phải dùng <b>lvh.me</b> vì LIVE Studio không nhận “localhost”. lvh.me trỏ về chính máy bạn, cần có mạng để tra tên miền. Không cần mở cửa sổ phát live.</p>
+              <div class="sub-lbl">Để hình trên TikTok không vỡ, không nhạt màu</div>
+              <ul class="steps" style="list-style:disc">
+                <li>LIVE Studio → Cài đặt → Video: <b>1080p</b>, <b>30 FPS</b>, <b>bitrate cao nhất</b> (6000–8000 kbps).</li>
+                <li>Nguồn Link đúng <b>1080 × 1920</b>, phủ vừa khít khung — <b>không kéo phóng to</b>.</li>
+                <li>Màu nhạt? Tăng <b>Cài đặt → Độ tươi màu khi live</b> (10–20%).</li>
+              </ul>
+              <div class="sub-lbl">Cách 2 — chụp cửa sổ (dự phòng)</div>
+              <ol class="steps">
+                <li>Bấm nút <b>Phát …</b> của cảnh muốn live ở trên. Một cửa sổ dọc chỉ có cảnh đó hiện ra. <b>Đừng thu nhỏ</b> cửa sổ này (có thể để phía sau cửa sổ khác).</li>
+                <li>Mở <b>TikTok LIVE Studio</b>, chọn khung <b>dọc</b> (Portrait).</li>
+                <li>Thêm nguồn → <b>Chụp cửa sổ</b> (Window capture) → chọn cửa sổ <b>“StudioLive - Man hinh phat live”</b>. Kéo cho phủ kín khung hình.</li>
+                <li>Muốn mặt bạn hiện lên: thêm nguồn <b>Camera</b>, đặt nhỏ ở một góc.</li>
+                <li>Để người xem nghe âm thanh: bật nguồn <b>âm thanh máy tính</b> (Speaker / Desktop audio) trong LIVE Studio.</li>
+                <li>Bấm <b>Go LIVE</b>, rồi quay lại tab <b>Bảng điều khiển</b>, nhập username của bạn và bấm <b>Kết nối</b>.</li>
+              </ol>
+            </div>
+            <div class="guide" data-guide="obs" hidden>
+              <ol class="steps">
+                <li>Trong OBS: <b>Sources → + → Browser</b>, dán đường dẫn ở trên, đặt 1080 × 1920, tích <b>Control audio via OBS</b>.</li>
+                <li>Phát lên TikTok bằng <b>Stream Key</b> (nếu tài khoản có), <b>hoặc</b> bấm <b>Start Virtual Camera</b> trong OBS rồi chọn camera <b>“OBS Virtual Camera”</b> trong TikTok LIVE Studio.</li>
+                <li>Bấm <b>Kết nối</b> ở Bảng điều khiển với username của bạn.</li>
+              </ol>
+            </div>
+            <div class="guide" data-guide="phone" hidden>
+              <p class="steps-p">App TikTok trên điện thoại <b>không cho chèn màn hình khác</b> vào buổi live, nên người xem sẽ không thấy cảnh nhà ma / chánh điện nếu bạn chỉ live bằng điện thoại.</p>
+              <p class="steps-p">Cách làm: cài <b>TikTok LIVE Studio</b> trên máy tính này và live từ máy tính (xem tab đầu). Điện thoại có thể dùng làm camera cho LIVE Studio.</p>
+              <p class="steps-p muted">Nếu bạn vẫn live bằng điện thoại, StudioLive vẫn đọc được bình luận để chơi, nhưng chỉ bạn nhìn thấy màn hình trên máy tính.</p>
+            </div>
+          </div>
+
+          
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= LIVE MA ONLINE ================= -->
+    <section class="view scene-view" id="view-ma">
+      <header class="page-head">
+        <div>
+          <h1>👻 Live Ma Online</h1>
+          <p class="muted">Đang mở tab này thì cảnh Nhà Ma chạy trên live. Người xem hoá ma, gõ “hù / trốn / tìm…” để chơi với nhau.</p>
+        </div>
+      </header>
+      <div class="feature-layout">
+        <div class="preview-wrap">
+          <div class="preview-frame feature-frame">
+            <iframe class="live-preview" data-for="ma" title="Cảnh Nhà Ma trên live"></iframe>
+          </div>
+          <div class="preview-actions">
+            <div style="display:flex;gap:6px">
+              <button class="btn ghost sm" data-pause>⏸ Tạm dừng</button>
+              <button class="btn ghost sm" data-open-output>📺 Mở màn hình phát live</button>
+              <button class="btn ghost sm" data-reload-preview title="Tải lại khung xem nếu bị đen">↻</button>
+            </div>
+            <label class="switch-inline"><input type="checkbox" class="preview-safe-cb"> 📱 Vùng bị TikTok che</label>
+            <label class="switch-inline"><input type="checkbox" class="preview-sound-cb"> 🔊 Nghe</label>
+          </div>
+          <p class="hint" style="max-width:405px">Đây chính là màn hình người xem thấy trên live. Đưa lên TikTok: tab <b>Đưa lên live</b>.</p>
+        </div>
+        <div class="feature-controls">
+        <div class="panel game-panel">
+          <div class="panel-head"><h2>Trò chơi</h2></div>
+          
+          
+          <div class="game-opts stack">
+            <div class="field">
+              <label>Vòng TRỐN TÌM tự động mỗi <span class="val" id="v-roundEvery"></span></label>
+              <input type="range" min="0" max="15" step="1" data-o="roundEvery" data-num>
+            </div>
+            <div class="field">
+              <label>Hiện bảng CÁCH CHƠI mỗi <span class="val" id="v-tutorialEvery"></span></label>
+              <input type="range" min="0" max="10" step="1" data-o="tutorialEvery" data-num>
+            </div>
+            <label class="toggle"><span>Ma NPC (Ma Xó, Ma Lai…) đi hù người xem và chỉ cách chơi</span><input type="checkbox" data-o="bots"><i></i></label>
+          </div>
+        </div>
+        <div class="panel">
+            <div class="panel-head"><h2>Gửi thử</h2></div>
+            <div class="test-grid">
+              <button class="btn ghost" data-test="chat">💬 Bình luận</button>
+              <button class="btn ghost" data-test="gift">🎁 Quà nhỏ</button>
+              <button class="btn ghost" data-test="bigGift">🏰 Quà lớn</button>
+              <button class="btn ghost" data-test="follow">➕ Theo dõi</button>
+              <button class="btn ghost" data-test="share">🔗 Chia sẻ</button>
+              <button class="btn ghost" data-test="join">🚪 Vào phòng</button>
+            </div>
+            <div class="sub-lbl">Trò chơi Nhà Ma</div>
+            <div class="test-grid">
+              <button class="btn ghost" data-test="scare">👻 Gõ “hù”</button>
+              <button class="btn ghost" data-test="hide">🤫 Gõ “trốn”</button>
+              <button class="btn ghost" data-test="seek">🔦 Gõ “tìm”</button>
+              <button class="btn ghost" data-test="thunder">⚡ Sấm chớp</button>
+              <button class="btn ghost" data-test="jumpscare">😱 Jumpscare</button>
+              <button class="btn ghost" data-test="peek">👀 Ma ló mặt</button>
+              <button class="btn ghost" data-test="howto">📖 Hiện cách chơi</button>
+              <button class="btn ghost" data-test="freeze">📜 Gõ “bùa”</button>
+              <button class="btn ghost" data-test="summon">🕯️ Gõ “gọi hồn”</button>
+              <button class="btn ghost" data-test="blackout">🌑 Gõ “tắt đèn”</button>
+              <button class="btn ghost" data-test="hug">🤗 Gõ “ôm”</button>
+              <button class="btn ghost" data-test="dance">💃 Gõ “nhảy”</button>
+              <button class="btn ghost" data-test="laugh">😈 Gõ “cười”</button>
+              <button class="btn ghost" data-test="cry">😭 Gõ “khóc”</button>
+              <button class="btn game-btn" data-test="round">💀 Bắt đầu vòng TRỐN TÌM ngay</button>
+            </div>
+          </div>
+        
+        
+        <div class="panel">
+          <div class="panel-head"><h2>Âm thanh Nhà Ma</h2></div>
+          <div class="toggles">
+            
+            <label class="toggle"><span>Nhạc nền rùng rợn</span><input type="checkbox" data-o="ambient"><i></i></label>
+          </div>
+          <div class="field">
+            <label>Kiểu nhạc nền</label>
+            <div class="amb-grid" id="amb-grid">
+              <button data-amb="drone"><b>🌫️ U ám</b><span>Tiếng trầm nghịch tai, thì thầm xa</span></button>
+              <button data-amb="wind"><b>🌪️ Gió hú</b><span>Gió rít qua khe cửa, cửa kẽo kẹt</span></button>
+              <button data-amb="rain"><b>🌧️ Mưa đêm</b><span>Mưa rơi, giọt nước, sấm rền xa</span></button>
+              <button data-amb="church"><b>⛪ Nhà thờ hoang</b><span>Đàn organ giọng thứ, chuông xa</span></button>
+              <button data-amb="heartbeat"><b>💓 Hồi hộp</b><span>Tim đập chậm, tiếng thở</span></button>
+              <button data-amb="musicbox"><b>🎠 Hộp nhạc ma</b><span>Điệu ru lệch tông, đĩa rè</span></button>
+              <button data-amb="whispers"><b>🗣️ Thì thầm</b><span>Tiếng thì thầm trái phải, trẻ con cười</span></button>
+              <button data-amb="forest"><b>🦉 Rừng đêm</b><span>Dế kêu, cú gáy, gió nhẹ</span></button>
+            </div>
+            <p class="hint">Bấm chọn là đổi ngay. Nghe thử ở khung xem bên trái (bật 🔊 Nghe).</p>
+          </div>
+          <div class="field">
+            <label>Âm lượng nhạc nền <span class="val" id="v-ambientVolume"></span></label>
+            <input type="range" min="0" max="1" step="0.05" data-o="ambientVolume" data-num>
+          </div>
+          
+          
+          
+          
+        </div>
+        
+        <details class="adv span-2">
+          <summary>Tuỳ chỉnh nâng cao (hiển thị, giao diện, âm thanh tự chọn)</summary>
+          <div class="adv-grid">
+        <div class="panel">
+          <div class="panel-head"><h2>Hiển thị trên màn hình</h2></div>
+          <div class="toggles">
+            <label class="toggle"><span>Bình luận</span><input type="checkbox" data-o="showChat"><i></i></label>
+            <label class="toggle"><span>Quà tặng</span><input type="checkbox" data-o="showGifts"><i></i></label>
+            <label class="toggle"><span>Thông báo theo dõi</span><input type="checkbox" data-o="showFollows"><i></i></label>
+            <label class="toggle"><span>Thông báo chia sẻ</span><input type="checkbox" data-o="showShares"><i></i></label>
+            <label class="toggle"><span>Người vào phòng</span><input type="checkbox" data-o="showJoins"><i></i></label>
+            <label class="toggle"><span>Bộ đếm tim</span><input type="checkbox" data-o="showLikeCounter"><i></i></label>
+            <label class="toggle"><span>Bộ đếm người xem</span><input type="checkbox" data-o="showViewerCounter"><i></i></label>
+            <label class="toggle"><span>Bảng “Đại gia đêm nay”</span><input type="checkbox" data-o="showTopGifter"><i></i></label>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="panel-head"><h2>Giao diện &amp; hiệu ứng</h2></div>
+          <div class="field">
+            <label>Nền overlay</label>
+            <div class="seg" id="bg-seg">
+              <button data-bg="haunted">Cảnh nhà ma 👻</button>
+              <button data-bg="transparent">Trong suốt (đè camera)</button>
+            </div>
+          </div>
+          <div class="field">
+            <label>Màu chủ đạo</label>
+            <div class="swatches" id="swatches">
+              <button style="--s:#a3e635" data-c="#a3e635"></button>
+              <button style="--s:#22d3ee" data-c="#22d3ee"></button>
+              <button style="--s:#c084fc" data-c="#c084fc"></button>
+              <button style="--s:#f43f5e" data-c="#f43f5e"></button>
+              <button style="--s:#facc15" data-c="#facc15"></button>
+              <input type="color" id="accent-custom" title="Màu tuỳ chọn">
+            </div>
+          </div>
+          <div class="field">
+            <label>Thời gian hiện bình luận <span class="val" id="v-chatDuration"></span></label>
+            <input type="range" min="2" max="12" step="0.5" data-o="chatDuration" data-num>
+          </div>
+          <div class="field">
+            <label>Số bình luận tối đa cùng lúc <span class="val" id="v-maxCards"></span></label>
+            <input type="range" min="1" max="12" step="1" data-o="maxCards" data-num>
+          </div>
+          <div class="field">
+            <label>“Quà lớn” (jumpscare + gọi Bà Ma) khi tổng từ (kim cương)</label>
+            <input type="number" min="0" class="inp" data-o="bigGiftDiamonds" data-num>
+          </div>
+          <div class="field">
+            <label>Ảnh / video jumpscare <span class="muted small">(tuỳ chọn)</span></label>
+            <div class="file-row">
+              <span class="file-name" id="f-customJumpscare">Mặc định: 6 mặt ma ngẫu nhiên</span>
+              <button class="btn ghost sm" data-pick="customJumpscare" data-kind="media">Chọn file</button>
+              <button class="btn ghost sm" data-clear="customJumpscare">Mặc định</button>
+            </div>
+            <p class="hint">Dùng ảnh hoặc clip kinh dị của bạn (jpg, png, gif, mp4, webm). Video có tiếng sẽ phát tiếng của video.</p>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="panel-head"><h2>Âm thanh tự chọn</h2></div>
+          <div class="toggles"><label class="toggle"><span>Tiếng “ting” khi có bình luận</span><input type="checkbox" data-o="chatSound"><i></i></label></div>
+          <div class="field">
+            <label>Âm thanh quà tặng</label>
+            <div class="file-row">
+              <span class="file-name" id="f-customGiftSound">Mặc định: chuông chùa</span>
+              <button class="btn ghost sm" data-pick="customGiftSound">Chọn file</button>
+              <button class="btn ghost sm" data-clear="customGiftSound">Mặc định</button>
+            </div>
+          </div>
+          <div class="field">
+            <label>Tiếng khi bị hù</label>
+            <div class="file-row">
+              <span class="file-name" id="f-customScareSound">Mặc định: 4 kiểu tiếng thét ngẫu nhiên</span>
+              <button class="btn ghost sm" data-pick="customScareSound">Chọn file</button>
+              <button class="btn ghost sm" data-clear="customScareSound">Mặc định</button>
+            </div>
+          </div>
+          <div class="field">
+            <label>Nhạc nền</label>
+            <div class="file-row">
+              <span class="file-name" id="f-customAmbient">Mặc định: gió hú tự tạo</span>
+              <button class="btn ghost sm" data-pick="customAmbient">Chọn file</button>
+              <button class="btn ghost sm" data-clear="customAmbient">Mặc định</button>
+            </div>
+          </div>
+          <div class="field">
+            <label>Âm thanh bình luận</label>
+            <div class="file-row">
+              <span class="file-name" id="f-customChatSound">Mặc định: ting</span>
+              <button class="btn ghost sm" data-pick="customChatSound">Chọn file</button>
+              <button class="btn ghost sm" data-clear="customChatSound">Mặc định</button>
+            </div>
+          </div>
+        </div>
+          </div>
+        </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= ĐI CHÙA ================= -->
+    <section class="view scene-view" id="view-chua">
+      <header class="page-head">
+        <div>
+          <h1>🪷 Đi Chùa Online</h1>
+          <p class="muted">Không gian chánh điện thanh tịnh, sắc nét 2×. Người xem gõ “adidaphat” dâng hương, gửi Sớ Cầu An, đổi 6 nhân vật — không tự chèn nhạc nền pha tạp.</p>
+        </div>
+      </header>
+      <div class="feature-layout">
+        <div class="preview-wrap">
+          <div class="preview-frame feature-frame">
+            <iframe class="live-preview" data-for="chua" title="Cảnh chánh điện trên live"></iframe>
+          </div>
+          <div class="preview-actions">
+            <div style="display:flex;gap:6px">
+              <button class="btn ghost sm" data-pause>⏸ Tạm dừng</button>
+              <button class="btn ghost sm" data-open-output>📺 Mở màn hình phát live</button>
+              <button class="btn ghost sm" data-reload-preview title="Tải lại khung xem nếu bị đen">↻</button>
+            </div>
+            <label class="switch-inline"><input type="checkbox" class="preview-safe-cb"> 📱 Vùng bị TikTok che</label>
+            <label class="switch-inline"><input type="checkbox" class="preview-sound-cb"> 🔊 Nghe</label>
+          </div>
+          <p class="hint" style="max-width:405px">Đây chính là màn hình người xem thấy trên live. Đưa lên TikTok: tab <b>Đưa lên live</b>.</p>
+        </div>
+      <div class="feature-controls">
+        <div class="panel">
+          <div class="panel-head"><h2>Tên chánh điện &amp; giọng đọc</h2></div>
+          <div class="field" style="margin-top:0">
+            <label>Tên hiển thị <span class="muted small">(bảng hoành phi + giọng đọc tự xưng)</span></label>
+            <div class="file-row">
+              <input class="inp" id="chua-name" maxlength="40" placeholder="Ví dụ: Chánh Điện Tâm An">
+              <button class="btn primary sm" id="chua-name-save">Lưu</button>
+            </div>
+          </div>
+          <div class="toggles" style="margin-top:8px">
+            <label class="toggle"><span>Giọng đọc (cảm ơn quà, đọc Sớ Cầu An)</span><input type="checkbox" data-o="chuaVoice"><i></i></label>
+            <label class="toggle"><span>Chào đón người mới vào bằng giọng đọc</span><input type="checkbox" data-o="chuaGreet"><i></i></label>
+            <label class="toggle"><span>Hiện bảng chào mừng trên màn hình khi người xem bước vào</span><input type="checkbox" data-o="chuaWelcomeBanner"><i></i></label>
+            <label class="toggle"><span>Tự động nhắc chia sẻ (mỗi 2 phút khi yên lặng)</span><input type="checkbox" data-o="chuaAutoShare"><i></i></label>
+          </div>
+          <div class="field">
+            <label>Tốc độ giọng đọc <span class="val" id="v-chuaRate"></span></label>
+            <input type="range" min="0.6" max="1.3" step="0.05" data-o="chuaRate" data-num>
+          </div>
+          <div class="field">
+            <label>Số tim để nở mưa hoa sen</label>
+            <input type="number" class="inp" min="10" data-o="chuaLikeGoal" data-num>
+          </div>
+          <p class="hint">Giọng đọc tiếng Việt tự nhiên qua Microsoft Edge TTS (dự phòng Google / giọng máy). Câu cần đọc được gửi tới dịch vụ đọc khi bật.</p>
+        </div>
+
+        <div class="panel">
+          <div class="panel-head"><h2>Âm thanh Chánh Điện</h2></div>
+          <p class="hint" style="margin:0 0 10px">Mặc định <b>Tắt nhạc nền</b> để không tự phát nhạc lạ — chỉ vang tiếng chuông đồng, mõ gỗ, khánh và giọng đọc đúng nghi thức.</p>
+          <div class="amb-grid" id="chua-soundscape">
+            <button data-sc="off"><b>🔇 Tắt nhạc nền</b><span>Chỉ chuông, mõ, khánh &amp; giọng đọc</span></button>
+            <button data-sc="bell"><b>🥣 Chuông xoay tịnh tâm</b><span>Âm ngân trầm ấm thuần khiết, không lời</span></button>
+            <button data-sc="chant"><b>🪵 Nhịp mõ tịnh niệm</b><span>Tiếng mõ đều đặn + khánh đồng thanh tịnh</span></button>
+            <button data-sc="custom"><b>🎵 Nhạc MP3 tự chọn</b><span>Chỉ phát đúng file nhạc của riêng bạn</span></button>
+          </div>
+          <div class="field" id="chua-custom-row">
+            <label>File nhạc MP3 tự chọn <span class="muted small">(khi chọn chế độ MP3)</span></label>
+            <div class="file-row">
+              <span class="file-name" id="f-customChuaMusic">Chưa chọn file nhạc</span>
+              <button class="btn ghost sm" data-pick="customChuaMusic">Chọn file</button>
+              <button class="btn ghost sm" data-clear="customChuaMusic">Xoá</button>
+            </div>
+          </div>
+          <div class="field" id="chua-vol-field">
+            <label>Âm lượng âm thanh nền <span class="val" id="v-chuaMusicVolume"></span></label>
+            <input type="range" min="0" max="1" step="0.05" data-o="chuaMusicVolume" data-num>
+          </div>
+        </div>
+
+        <div class="col">
+          <div class="panel">
+            <div class="panel-head"><h2>Đọc ngay</h2></div>
+            <textarea class="inp" id="chua-speak" rows="2" maxlength="400" placeholder="Ví dụ: Chúc cả nhà buổi tối thân khỏe tâm an, vạn sự cát tường ạ."></textarea>
+            <div class="file-row" style="margin-top:8px">
+              <button class="btn primary sm" id="chua-speak-btn">🔊 Đọc ngay</button>
+              <span class="muted small">Được ưu tiên đọc trước hàng đợi.</span>
+            </div>
+          </div>
+          <div class="panel">
+            <div class="panel-head"><h2>Pháp khí &amp; Điều khiển</h2></div>
+            <div class="test-grid">
+              <button class="btn ghost" data-chua="bell">🔔 Thỉnh chuông (phải)</button>
+              <button class="btn ghost" data-chua="mo">🪵 Gõ mõ (trái)</button>
+              <button class="btn ghost" data-chua="incense">🕯️ Dâng nén hương</button>
+              <button class="btn ghost" data-chua="lotus">🪷 Nở đài sen vàng</button>
+              <button class="btn ghost" data-chua="rain">🌸 Mưa hoa sen ngay</button>
+              <button class="btn ghost" data-chua="share">📣 Đọc lời chúc chung</button>
+              <button class="btn ghost" data-chua="reset">↺ Đặt lại bảng thành tâm</button>
+            </div>
+          </div>
+          <div class="panel">
+            <div class="panel-head">
+              <h2>Cụm từ bình luận → Hiệu ứng</h2>
+              <div style="display:flex;gap:6px">
+                <button class="btn ghost sm" id="chua-trig-reset" title="Khôi phục bộ từ khoá gốc">Mặc định</button>
+                <button class="btn primary sm" id="chua-trig-add">+ Thêm</button>
+              </div>
+            </div>
+            <p class="hint" style="margin:0 0 8px">Người xem bình luận chứa cụm từ nào (ngăn cách nhiều từ bằng dấu phẩy) sẽ nổ đúng hiệu ứng đó ngay tại nhân vật. Bấm <b>▶</b> để thử ngay.</p>
+            <div class="trig-list" id="chua-trigger-list"></div>
+          </div>
+          <div class="panel">
+            <div class="panel-head"><h2>Gửi thử tương tác</h2></div>
+            <div class="test-grid">
+              <button class="btn ghost" data-test="join">🚪 Phật tử vào phòng</button>
+              <button class="btn ghost" data-test="adidaphat">🙏 Niệm Phật dâng hương</button>
+              <button class="btn ghost" data-test="bellChat">🔔 Gõ “thỉnh chuông”</button>
+              <button class="btn ghost" data-test="lotusChat">🪷 Gõ “hoa sen”</button>
+              <button class="btn ghost" data-test="wish">📜 Gửi Sớ Cầu An</button>
+              <button class="btn ghost" data-test="skin">🧘 Đổi nhân vật (6 kiểu)</button>
+              <button class="btn ghost" data-test="gift">🎁 Tặng Hoa Sen</button>
+              <button class="btn ghost" data-test="bigGift">🪷 Tặng Đài Sen Vàng</button>
+              <button class="btn ghost" data-chua="testLikes">❤️ Cộng 100 tim</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
+    </section>
+
+    <!-- ================= ĐI BAR ONLINE ================= -->
+    <section class="view scene-view" id="view-bar">
+      <header class="page-head">
+        <div>
+          <h1>🪩 Đi Bar Online</h1>
+          <p class="muted">Sân khấu Nightclub tương tác trực tiếp: khách chỉ cần bình luận bất kỳ là hóa nhân vật Meme hoạt hình nổi tiếng vào nhảy suốt buổi (rời live mới mất), hỗ trợ dán link nhạc YouTube / SoundCloud / MP3 phát trực tiếp trên sàn.</p>
+        </div>
+      </header>
+      <div class="feature-layout">
+        <div class="preview-wrap">
+          <div class="preview-frame feature-frame">
+            <iframe class="live-preview" data-for="bar" title="Cảnh Đi Bar Online trên live"></iframe>
+          </div>
+          <div class="preview-actions">
+            <div style="display:flex;gap:6px">
+              <button class="btn ghost sm" data-pause>⏸ Tạm dừng</button>
+              <button class="btn ghost sm" data-open-output>📺 Mở màn hình phát live</button>
+              <button class="btn ghost sm" data-reload-preview title="Tải lại khung xem nếu bị đen">↻</button>
+            </div>
+            <label class="switch-inline"><input type="checkbox" class="preview-safe-cb"> 📱 Vùng bị TikTok che</label>
+            <label class="switch-inline"><input type="checkbox" class="preview-sound-cb"> 🔊 Nghe</label>
+          </div>
+          <p class="hint" style="max-width:405px">Đây chính là màn hình người xem thấy trên live. Đưa lên TikTok: tab <b>Đưa lên live</b>.</p>
+        </div>
+
+        <div class="feature-controls">
+          <div class="panel">
+            <div class="panel-head"><h2>Phong cách Sàn Bar &amp; MC</h2></div>
+            <div class="field" style="margin-top:0">
+              <label>Tông màu ánh sáng sân khấu</label>
+              <div class="theme-grid" id="bar-theme">
+                <button data-btheme="cyber"><span class="th-sw" style="background:linear-gradient(135deg,#ec4899,#18062c 55%,#06b6d4)"></span><b>Cyber Neon</b><small>Hồng &amp; xanh cyan rực rỡ</small></button>
+                <button data-btheme="vinahouse"><span class="th-sw" style="background:linear-gradient(135deg,#ef4444,#2c0710 55%,#f59e0b)"></span><b>Vinahouse</b><small>Đỏ lửa &amp; vàng hoàng kim</small></button>
+                <button data-btheme="galaxy"><span class="th-sw" style="background:linear-gradient(135deg,#8b5cf6,#0f173d 55%,#38bdf8)"></span><b>Galaxy VIP</b><small>Tím vũ trụ &amp; laser lam</small></button>
+                <button data-btheme="rooftop"><span class="th-sw" style="background:linear-gradient(135deg,#10b981,#072924 55%,#fbbf24)"></span><b>Rooftop</b><small>Ngọc lục bảo &amp; nắng vàng</small></button>
+              </div>
+            </div>
+            <div class="field">
+              <label>Tên sàn bar <span class="muted small">(hiện trên bục DJ, dải băng rôn LED &amp; lời chào MC)</span></label>
+              <div class="file-row">
+                <input class="inp" id="bar-name" maxlength="40" placeholder="Ví dụ: Club Hồng Thắm">
+                <button class="btn primary sm" id="bar-name-save">Lưu</button>
+              </div>
+            </div>
+            <div class="toggles" style="margin-top:8px">
+              <label class="toggle"><span>Giọng MC (chào khách, chúc mừng ghép đôi, cảm ơn quà)</span><input type="checkbox" data-o="barVoice"><i></i></label>
+              <label class="toggle"><span>MC đọc tên chào người mới vừa vào sàn</span><input type="checkbox" data-o="barGreet"><i></i></label>
+              <label class="toggle"><span>Hiện thanh chào mừng “vừa vào sàn” trên đỉnh màn hình</span><input type="checkbox" data-o="barWelcomeBanner"><i></i></label>
+            </div>
+            <div class="field">
+              <label>Tốc độ giọng MC <span class="val" id="v-barRate"></span></label>
+              <input type="range" min="0.6" max="1.3" step="0.05" data-o="barRate" data-num>
+            </div>
+            <div class="field">
+              <label>Số tim để nổ Bão Tim &amp; Pháo Hoa</label>
+              <input type="number" class="inp" min="10" data-o="barLikeGoal" data-num>
+            </div>
+            <div class="field">
+              <label>Tự rời sàn khi im lặng lâu <span class="val" id="v-barIdleMin"></span></label>
+              <input type="range" min="0" max="60" step="5" data-o="barIdleMin" data-num>
+              <p class="hint">Mặc định <b>Chỉ khi rời live</b>: ai đã bình luận sẽ ở lại nhảy suốt buổi live và chỉ vẫy tay rời sàn khi thoát live hoặc gõ chào tạm biệt (<i>bye, tạm biệt, rời live…</i>).</p>
+            </div>
+          </div>
+
+          <div class="panel">
+            <div class="panel-head"><h2>Nhạc nền &amp; Link Nhạc Sàn Bar</h2></div>
+            <p class="hint" style="margin:0 0 10px">Dán link nhạc YouTube, SoundCloud, link .mp3/.mp4 trực tiếp hoặc chọn file trên máy — hay dùng Beat EDM tự tạo sạch bản quyền không lo tắt tiếng live.</p>
+            <div class="amb-grid" id="bar-soundscape">
+              <button data-bsc="house"><b>🎧 Beat Sôi Động 128 BPM</b><span>Kick căng, bass nảy sạch bản quyền</span></button>
+              <button data-bsc="chill"><b>🍸 Lounge Chill 110 BPM</b><span>Nhịp deep êm ái, hợp trò chuyện</span></button>
+              <button data-bsc="custom"><b>🔗 Link nhạc / MP3 riêng</b><span>Phát link YouTube, SoundCloud, MP3…</span></button>
+              <button data-bsc="off"><b>🔇 Tắt nhạc nền</b><span>Chỉ giữ tiếng còi DJ, cụng ly &amp; giọng MC</span></button>
+            </div>
+            <div class="field" id="bar-custom-row">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+                <label style="margin:0">Điền link nhạc hoặc chọn file trên máy</label>
+                <button class="btn ghost sm" id="bar-music-file-add">+ Chọn file máy</button>
+              </div>
+              <div class="file-row" style="margin-bottom:10px">
+                <input class="inp" id="bar-music-link" placeholder="Dán link YouTube, SoundCloud hoặc link .mp3 / .m4a / .mp4...">
+                <button class="btn primary sm" id="bar-music-link-add">+ Thêm link</button>
+              </div>
+              <ol class="movie-list" id="bar-music-list"></ol>
+              <div class="movie-empty" id="bar-music-empty">Chưa có bài nhạc riêng. Dán <b>link YouTube / SoundCloud / .mp3</b> ở trên rồi bấm <b>+ Thêm link</b> (hoặc <b>+ Chọn file máy</b>) là phát ngay trên sàn!</div>
+              <div class="movie-ctrl" style="margin-bottom:10px">
+                <button class="btn ghost sm" data-bar="prevMusic">⏮ Bài trước</button>
+                <button class="btn primary sm" data-bar="playMusic">▶ Phát</button>
+                <button class="btn ghost sm" data-bar="pauseMusic">⏸ Dừng</button>
+                <button class="btn ghost sm" data-bar="nextMusic">Bài sau ⏭</button>
+              </div>
+              <label class="toggle"><span>Hết danh sách nhạc thì phát lặp lại</span><input type="checkbox" data-o="barMusicLoop"><i></i></label>
+            </div>
+            <div class="field" id="bar-vol-field">
+              <label>Âm lượng nhạc sàn <span class="val" id="v-barMusicVolume"></span></label>
+              <input type="range" min="0" max="1" step="0.05" data-o="barMusicVolume" data-num>
+            </div>
+          </div>
+
+          <div class="panel">
+            <div class="panel-head">
+              <h2>Cụm từ bình luận → Hiệu ứng</h2>
+              <div style="display:flex;gap:6px">
+                <button class="btn ghost sm" id="bar-trig-reset" title="Khôi phục bộ từ khoá gốc">Mặc định</button>
+                <button class="btn primary sm" id="bar-trig-add">+ Thêm</button>
+              </div>
+            </div>
+            <p class="hint" style="margin:0 0 8px">Mỗi khách nhảy có <b>hình đại diện (avatar) phát sáng ngay trên tên</b>. Gõ <b>lên chính</b> (hoặc cú pháp bạn đặt) để lên tâm điểm sân khấu, gõ <b>pháo hoa</b> để bắn đại tiệc pháo hoa rực trời, hoặc gõ tên Meme để biến hình!</p>
+            <div class="trig-list" id="bar-trigger-list"></div>
+          </div>
+
+          <div class="panel">
+            <div class="panel-head"><h2>MC đọc ngay &amp; Bàn DJ</h2></div>
+            <textarea class="inp" id="bar-speak" rows="2" maxlength="400" placeholder="Ví dụ: Chào mừng anh em vào sàn đêm nay, bình luận lên chính để bước lên tâm điểm sân khấu nào!"></textarea>
+            <div class="file-row" style="margin-top:8px;margin-bottom:12px">
+              <button class="btn primary sm" id="bar-speak-btn">🎤 MC đọc ngay</button>
+              <span class="muted small">Ưu tiên phát ngay trên loa live.</span>
+            </div>
+            <div class="sub-lbl">Bàn điều khiển DJ</div>
+            <div class="test-grid">
+              <button class="btn game-btn" data-bar="fireworks">🎆 Bắn Đại Tiệc Pháo Hoa</button>
+              <button class="btn game-btn" data-bar="drop">🔥 BASS DROP Bung Nóc</button>
+              <button class="btn ghost" data-bar="center">🌟 Mời khách Lên Chính</button>
+              <button class="btn ghost" data-bar="co2">💨 Xả pháo khói CO2</button>
+              <button class="btn ghost" data-bar="laser">⚡ Đại tiệc Laser</button>
+              <button class="btn ghost" data-bar="couple">💞 Ghép đôi ngẫu nhiên</button>
+              <button class="btn ghost" data-bar="parade">🏃 Cả sàn đi bão</button>
+              <button class="btn ghost" data-bar="cheers">🍻 Cả sàn 1·2·3 DZÔ</button>
+              <button class="btn ghost" data-bar="rain">❤️ Nổ Bão Tim &amp; Pháo Hoa</button>
+              <button class="btn ghost" data-bar="clear">🧹 Dọn sàn (mời khách nghỉ)</button>
+              <button class="btn ghost" data-bar="reset">↺ Đặt lại danh hiệu VIP</button>
+            </div>
+          </div>
+
+          <div class="panel">
+            <div class="panel-head"><h2>Gửi thử người vào &amp; hiệu ứng</h2></div>
+            <div class="test-grid">
+              <button class="btn primary" data-test="chat">💬 Bình luận (vào nhảy)</button>
+              <button class="btn primary" data-test="barCenter">🌟 Gõ “lên chính”</button>
+              <button class="btn ghost" data-test="barFireworks">🎆 Gõ “pháo hoa”</button>
+              <button class="btn ghost" data-test="leave">🚶 Khách rời live</button>
+              <button class="btn ghost" data-test="join">🚪 Lướt vào xem (chỉ chào)</button>
+              <button class="btn ghost" data-test="barJump">💃 Gõ “nhảy 1 cái”</button>
+              <button class="btn ghost" data-test="barCamera">📷 Gõ “camera”</button>
+              <button class="btn ghost" data-test="barSkin">🎭 Gõ “đổi nv”</button>
+              <button class="btn ghost" data-test="barParade">🏃 Gõ “đi vòng”</button>
+              <button class="btn ghost" data-test="barPilot">🚀 Gõ “phi công”</button>
+              <button class="btn ghost" data-test="barCouple">💞 Gõ “ghép đôi”</button>
+              <button class="btn ghost" data-test="barWukong">🐵 Gõ “ngộ không”</button>
+              <button class="btn ghost" data-test="barKing">👑 Gõ “vua”</button>
+              <button class="btn ghost" data-test="barCheers">🍻 Gõ “123 dzô”</button>
+              <button class="btn ghost" data-test="gift">🎁 Tặng Bia Tươi</button>
+              <button class="btn ghost" data-test="bigGift">💎 Tặng Siêu Xe VIP</button>
+              <button class="btn ghost" data-bar="testLikes">❤️ Cộng 100 tim</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= RẠP PHIM ONLINE ================= -->
+    <section class="view scene-view" id="view-rap">
+      <header class="page-head">
+        <div>
+          <h1>🎬 Rạp Phim Online</h1>
+          <p class="muted">Đang mở tab này thì cảnh rạp chiếu phim chạy trên live. Người xem vào được chào, đi vào ghế ngồi xem phim cùng nhau.</p>
+        </div>
+      </header>
+      <div class="feature-layout">
+        <div class="preview-wrap">
+          <div class="preview-frame feature-frame">
+            <iframe class="live-preview" data-for="rap" title="Cảnh rạp phim trên live"></iframe>
+          </div>
+          <div class="preview-actions">
+            <div style="display:flex;gap:6px">
+              <button class="btn ghost sm" data-pause>⏸ Tạm dừng</button>
+              <button class="btn ghost sm" data-open-output>📺 Mở màn hình phát live</button>
+              <button class="btn ghost sm" data-reload-preview title="Tải lại khung xem nếu bị đen">↻</button>
+            </div>
+            <label class="switch-inline"><input type="checkbox" class="preview-safe-cb"> 📱 Vùng bị TikTok che</label>
+            <label class="switch-inline"><input type="checkbox" class="preview-sound-cb"> 🔊 Nghe</label>
+          </div>
+          <p class="hint" style="max-width:405px">Đây chính là màn hình người xem thấy trên live. Đưa lên TikTok: tab <b>Đưa lên live</b>.</p>
+        </div>
+        <div class="feature-controls">
+          <div class="panel">
+            <div class="panel-head"><h2>Kiểu phòng chiếu</h2></div>
+            <div class="theme-grid" id="rap-theme">
+              <button data-theme="classic"><span class="th-sw" style="background:linear-gradient(135deg,#9b1023,#3a050c 60%,#d4a03c)"></span><b>Cổ điển</b><small>Rèm nhung đỏ</small></button>
+              <button data-theme="gold"><span class="th-sw" style="background:linear-gradient(135deg,#2a2622,#0a0907 55%,#e8c06a)"></span><b>VIP Gold</b><small>Ghế ngả da, đèn chùm</small></button>
+              <button data-theme="imax"><span class="th-sw" style="background:linear-gradient(135deg,#0a1020,#05070f 55%,#38bdf8)"></span><b>IMAX</b><small>Vách tiêu âm, LED xanh</small></button>
+              <button data-theme="home"><span class="th-sw" style="background:linear-gradient(135deg,#c9a27a,#3a2416 60%,#f5c27a)"></span><b>Gia đình</b><small>Sofa, gỗ ấm, đèn dây</small></button>
+            </div>
+          </div>
+          <div class="panel">
+            <div class="panel-head"><h2>Phim chiếu</h2><button class="btn primary sm" id="rap-add">+ Thêm phim</button></div>
+            <div class="file-row" style="margin-bottom:10px">
+              <input class="inp" id="rap-link" placeholder="Dán link YouTube hoặc link video .mp4 / .webm">
+              <button class="btn ghost sm" id="rap-link-add">+ Thêm link</button>
+            </div>
+            <ol class="movie-list" id="rap-list"></ol>
+            <div class="movie-empty" id="rap-empty">Chưa có phim. Dán <b>link YouTube</b> / link video, hoặc bấm <b>+ Thêm phim</b> để chọn file trên máy (mp4, webm, mov).</div>
+            <div class="movie-ctrl">
+              <button class="btn ghost sm" data-rap="prev">⏮ Phim trước</button>
+              <button class="btn primary sm" data-rap="play">▶ Chiếu</button>
+              <button class="btn ghost sm" data-rap="pause">⏸ Dừng</button>
+              <button class="btn ghost sm" data-rap="next">Phim sau ⏭</button>
+            </div>
+            <div class="field">
+              <label>Âm lượng phim <span class="val" id="v-rapVolume"></span></label>
+              <input type="range" min="0" max="1" step="0.05" data-o="rapVolume" data-num>
+            </div>
+            <label class="toggle"><span>Hết danh sách thì chiếu lại từ đầu</span><input type="checkbox" data-o="rapLoop"><i></i></label>
+            <p class="hint warn-hint">⚠️ Chỉ chiếu phim bạn có quyền phát (phim tự quay, phim đã hết bản quyền, phim được phép chiếu). Chiếu phim có bản quyền lên TikTok rất dễ bị tắt live hoặc khoá tài khoản.</p>
+          </div>
+          <div class="panel">
+            <div class="panel-head"><h2>Tên rạp &amp; giọng đọc</h2></div>
+            <div class="field" style="margin-top:0">
+              <label>Tên rạp <span class="muted small">(tiêu đề + giọng đọc)</span></label>
+              <div class="file-row">
+                <input class="inp" id="rap-name" maxlength="40" placeholder="Ví dụ: Rạp Phim Tâm An">
+                <button class="btn primary sm" id="rap-name-save">Lưu</button>
+              </div>
+            </div>
+            <div class="toggles" style="margin-top:8px">
+              <label class="toggle"><span>Giọng đọc (chào mừng, cảm ơn quà)</span><input type="checkbox" data-o="rapVoice"><i></i></label>
+              <label class="toggle"><span>Chào mừng người mới vào rạp</span><input type="checkbox" data-o="rapGreet"><i></i></label>
+            </div>
+            <div class="field">
+              <label>Tốc độ đọc <span class="val" id="v-rapRate"></span></label>
+              <input type="range" min="0.6" max="1.3" step="0.05" data-o="rapRate" data-num>
+            </div>
+            <div class="field">
+              <label>Số tim để mưa bắp rang</label>
+              <input type="number" class="inp" min="10" data-o="rapLikeGoal" data-num>
+            </div>
+            <div class="field">
+              <label>Tự đứng dậy ra về sau khi im lặng <span class="val" id="v-rapIdleMin"></span></label>
+              <input type="range" min="0" max="60" step="5" data-o="rapIdleMin" data-num>
+              <p class="hint">TikTok không báo khi một người rời live, nên người im lặng lâu sẽ tự ra về để trả ghế. Rạp đầy (84 ghế) thì người vào rạp lâu nhất đứng dậy ra về, nhường ghế cho người mới. Người tặng quà (ghế VIP) không bị mời ra.</p>
+            </div>
+          </div>
+          <div class="panel">
+            <div class="panel-head"><h2>Đọc ngay</h2></div>
+            <textarea class="inp" id="rap-speak" rows="2" maxlength="400" placeholder="Ví dụ: Phim sắp bắt đầu, mọi người ổn định chỗ ngồi nhé."></textarea>
+            <div class="file-row" style="margin-top:8px"><button class="btn primary sm" id="rap-speak-btn">🔊 Đọc ngay</button></div>
+          </div>
+          <div class="panel">
+            <div class="panel-head"><h2>Điều khiển</h2></div>
+            <div class="test-grid">
+              <button class="btn ghost lights-btn" id="rap-lights">💡 Tắt đèn phòng</button>
+              <button class="btn ghost" data-rap="clap">👏 Cả rạp vỗ tay</button>
+              <button class="btn ghost" data-rap="rain">🍿 Mưa bắp rang</button>
+              <button class="btn ghost" data-rap="share">📣 Nhắc chia sẻ</button>
+              <button class="btn ghost" data-rap="reset">↺ Đặt lại bảng điểm</button>
+            </div>
+          </div>
+          <div class="panel">
+            <div class="panel-head"><h2>Gửi thử</h2></div>
+            <div class="test-grid">
+              <button class="btn ghost" data-test="join">🚪 Vào rạp</button>
+              <button class="btn ghost" data-test="chat">💬 Bình luận</button>
+              <button class="btn ghost" data-test="clap">👏 Gõ “vỗ tay”</button>
+              <button class="btn ghost" data-test="haha">😂 Gõ “haha”</button>
+              <button class="btn ghost" data-test="wow">😮 Gõ “wow”</button>
+              <button class="btn ghost" data-test="popcorn">🍿 Gõ “bắp”</button>
+              <button class="btn ghost" data-test="gift">🎁 Quà nhỏ</button>
+              <button class="btn ghost" data-test="bigGift">💎 Quà lớn</button>
+              <button class="btn ghost" data-rap="testLikes">❤️ Thả 100 tim</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= LỚP HỌC CHỮ ================= -->
+    <section class="view scene-view" id="view-lop">
+      <header class="page-head">
+        <div>
+          <h1>📚 Lớp Học Chữ</h1>
+          <p class="muted">Tiết học 20 câu (2.076 câu đố chữ + Tiếng Anh + Đố mẹo + Lịch sử + 4 câu Tính nhẩm + Câu Hỏi Vàng ×2), 4 dãy bàn gỗ dài 30 chỗ xếp theo điểm + 60 chỗ đứng cửa lớp, Cô Giáo Hoài My đọc đề – tuyên dương – phát quà, 5 trò Giờ Ra Chơi &amp; Báo cáo buổi live.</p>
+        </div>
+        <div class="head-actions">
+          <button class="btn ghost" id="btn-lop-report">📊 Báo cáo buổi live</button>
+        </div>
+      </header>
+      <div class="feature-layout">
+        <div class="preview-wrap">
+          <div class="preview-frame feature-frame">
+            <iframe class="live-preview" data-for="lop" title="Cảnh Lớp Học Chữ trên live"></iframe>
+          </div>
+          <div class="preview-actions">
+            <div style="display:flex;gap:6px">
+              <button class="btn ghost sm" data-pause>⏸ Tạm dừng</button>
+              <button class="btn ghost sm" data-open-output>📺 Mở màn hình phát live</button>
+              <button class="btn ghost sm" data-reload-preview title="Tải lại khung xem nếu bị đen">↻</button>
+            </div>
+            <label class="switch-inline"><input type="checkbox" class="preview-safe-cb"> 📱 Vùng bị TikTok che</label>
+            <label class="switch-inline"><input type="checkbox" class="preview-sound-cb"> 🔊 Nghe</label>
+          </div>
+          <p class="hint" style="max-width:405px">Đây chính là màn hình người xem thấy trên live. Đưa lên TikTok: tab <b>Đưa lên live</b>.</p>
+        </div>
+
+        <div class="feature-controls">
+          <div class="panel">
+            <div class="panel-head">
+              <h2>Trạng Thái Tiết Học Trực Tiếp <span class="muted small">(chỉ chủ kênh thấy đáp án)</span></h2>
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin-bottom:10px">
+              <div style="padding:10px 12px;border-radius:10px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08)">
+                <div class="muted small">Tiết / Câu hiện tại</div>
+                <strong id="lop-st-round" style="font-size:16px">Tiết 1 · Mở đầu</strong>
+              </div>
+              <div style="padding:10px 12px;border-radius:10px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08)">
+                <div class="muted small">Trạng thái</div>
+                <strong id="lop-st-phase" style="font-size:16px;color:#38bdf8">Đang vào tiết</strong>
+              </div>
+              <div style="padding:10px 12px;border-radius:10px;background:rgba(250,204,21,.08);border:1px solid rgba(250,204,21,.3)">
+                <div class="muted small">🔑 Đáp án bí mật</div>
+                <strong id="lop-st-ans" style="font-size:17px;color:#fde047">—</strong>
+              </div>
+              <div style="padding:10px 12px;border-radius:10px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08)">
+                <div class="muted small">Sĩ số / Trả lời câu này</div>
+                <strong id="lop-st-players" style="font-size:15px">0 bạn · 0 đúng / 0 đoán</strong>
+              </div>
+            </div>
+            <div class="muted small" id="lop-st-clue" style="margin-bottom:10px">Gợi ý: Đang chuẩn bị câu hỏi…</div>
+            <div class="test-grid">
+              <button class="btn game-btn" data-lop="skip">⏭ Qua phần tiếp</button>
+              <button class="btn game-btn" data-lop="reveal">✅ Mở đáp án ngay</button>
+              <button class="btn ghost" data-lop="newRound">🔄 Bắt đầu Tiết mới</button>
+              <button class="btn ghost" data-lop="hint">💡 Mở 1 chữ gợi ý</button>
+              <button class="btn ghost" data-lop="ban" title="Lưu câu này vào danh sách bỏ qua để không hỏi lại">🚫 Bỏ câu này</button>
+              <button class="btn ghost" data-lop="resetScores">🧹 Đặt lại điểm hôm nay</button>
+              <button class="btn ghost" data-lop="clearClass">🚪 Cho cả lớp tan học</button>
+            </div>
+          </div>
+
+          <div class="panel">
+            <div class="panel-head"><h2>Bàn Giáo Viên, Sinh Nhật &amp; Giờ Ra Chơi</h2></div>
+            <textarea class="inp" id="lop-speak" rows="2" maxlength="400" placeholder="Ví dụ: Cả lớp chú ý nghe cô đọc gợi ý câu này nhé, nhớ gõ đầy đủ dấu tiếng Việt nha!"></textarea>
+            <div class="file-row" style="margin-top:8px;margin-bottom:12px">
+              <button class="btn primary sm" id="lop-speak-btn">🎤 Cô Giáo đọc ngay</button>
+              <span class="muted small">Hỗ trợ cả tiếng Anh bằng cú pháp <code>| E: hello | F: xin chào</code></span>
+            </div>
+            <div class="field" style="margin-top:0">
+              <label>🎂 Tổ chức sinh nhật trên lớp <span class="muted small">(đặt bánh kem lên bàn + cả lớp vỗ tay)</span></label>
+              <div class="file-row">
+                <input class="inp" id="lop-bday-name" maxlength="32" placeholder="Nhập tên bạn nhỏ sinh nhật hôm nay...">
+                <button class="btn primary sm" id="lop-bday-btn">🎂 Chúc sinh nhật</button>
+              </div>
+            </div>
+            <div class="sub-lbl" style="margin-top:12px">🔔 Bật ngay 1 trong 5 trò Giờ Ra Chơi</div>
+            <div class="test-grid">
+              <button class="btn ghost" data-lop-recess="rps">✊✌️🖐️ Oẳn tù tì (+2đ)</button>
+              <button class="btn ghost" data-lop-recess="callup">📢 Kiểm tra miệng (+5đ)</button>
+              <button class="btn ghost" data-lop-recess="pick">⚖️ Chọn phe 1 / 2</button>
+              <button class="btn ghost" data-lop-recess="roll">🙋 Điểm danh “có mặt” (+3đ)</button>
+              <button class="btn ghost" data-lop-recess="heart">❤️ Thử thách 300 tim (+1đ)</button>
+            </div>
+          </div>
+
+          <div class="panel">
+            <div class="panel-head"><h2>Không gian Lớp Học, Nhân vật &amp; Luật chơi</h2></div>
+            <div class="field" style="margin-top:0">
+              <label>Tông màu phòng học</label>
+              <div class="theme-grid" id="lop-theme">
+                <button data-ltheme="classic"><span class="th-sw" style="background:linear-gradient(135deg,#c97843,#1b4332 55%,#eab87d)"></span><b>Lớp Học Nắng Ấm</b><small>Chuẩn Lớp Học Chữ Việt Nam</small></button>
+                <button data-ltheme="pastel"><span class="th-sw" style="background:linear-gradient(135deg,#d7efe8,#235347 55%,#f5d5a7)"></span><b>Mint Pastel</b><small>Xanh ngọc dịu mắt</small></button>
+                <button data-ltheme="sunny"><span class="th-sw" style="background:linear-gradient(135deg,#fef08a,#1e4635 55%,#f3c687)"></span><b>Nắng Sớm</b><small>Vàng tươi rực rỡ</small></button>
+                <button data-ltheme="sakura"><span class="th-sw" style="background:linear-gradient(135deg,#fecdd3,#244b43 55%,#f3d1bd)"></span><b>Hoa Anh Đào</b><small>Hồng phấn dễ thương</small></button>
+                <button data-ltheme="sky"><span class="th-sw" style="background:linear-gradient(135deg,#bae6fd,#1d473d 55%,#edd2a8)"></span><b>Trời Xanh</b><small>Xanh mây thoáng đãng</small></button>
+              </div>
+            </div>
+            <div class="field">
+              <label>Kiểu hiển thị học sinh ngồi bàn</label>
+              <div class="seg" id="lop-avatar-seg">
+                <button data-lav="avatar">🖼️ Avatar TikTok tròn + Khăn quàng đỏ</button>
+                <button data-lav="back">🎒 Học sinh quay lưng nhìn bảng (10 kiểu tóc)</button>
+              </div>
+            </div>
+            <div class="field">
+              <label>Tên lớp học <span class="muted small">(hiện trên biển gỗ chính giữa)</span></label>
+              <div class="file-row">
+                <input class="inp" id="lop-name" maxlength="40" placeholder="Ví dụ: Lớp Học Chữ">
+                <button class="btn primary sm" id="lop-name-save">Lưu</button>
+              </div>
+            </div>
+            <div class="field">
+              <label>Chủ đề câu hỏi (kho 2.076 câu — 30 chủ đề)</label>
+              <select class="inp trig-sel" data-o="lopTopic" id="lop-topic">
+                <option value="all">🎲 Trộn đầy đủ 30 chủ đề + Tiếng Anh + Đố mẹo + Lịch sử (Chuẩn tiết 20 câu)</option>
+                <option value="Trường lớp">🏫 Trường lớp</option>
+                <option value="Con vật">🐾 Con vật</option>
+                <option value="Cây cối, hoa quả">🍉 Cây cối, hoa quả</option>
+                <option value="Món ăn Việt">🍜 Món ăn Việt</option>
+                <option value="Đồ uống, ăn vặt">🧋 Đồ uống, ăn vặt</option>
+                <option value="Nghề nghiệp">👩‍⚕️ Nghề nghiệp</option>
+                <option value="Đất nước Việt Nam">🇻🇳 Đất nước Việt Nam</option>
+                <option value="Tỉnh thành Việt Nam">🗺️ Tỉnh thành Việt Nam</option>
+                <option value="Đồ vật trong nhà">🏠 Đồ vật trong nhà</option>
+                <option value="Phương tiện, giao thông">🛵 Phương tiện, giao thông</option>
+                <option value="Thiên nhiên, thời tiết">🌈 Thiên nhiên, thời tiết</option>
+                <option value="Cơ thể, sức khỏe">💪 Cơ thể, sức khỏe</option>
+                <option value="Thể thao, trò chơi">⚽ Thể thao, trò chơi</option>
+                <option value="Lễ Tết, phong tục">🧧 Lễ Tết, phong tục</option>
+                <option value="Ca dao, thành ngữ (điền từ còn thiếu)">📜 Ca dao, thành ngữ</option>
+                <option value="Tuổi thơ 8x 9x">🪁 Tuổi thơ 8x 9x</option>
+                <option value="Gen Z, mạng xã hội">📱 Gen Z, mạng xã hội</option>
+                <option value="Âm nhạc, nghệ thuật">🎵 Âm nhạc, nghệ thuật</option>
+                <option value="Màu sắc, hình học, con số">🎨 Màu sắc, hình học, con số</option>
+                <option value="Thế giới">🌍 Thế giới</option>
+                <option value="Đoán quốc gia">🏳️ Đoán quốc gia</option>
+                <option value="Gia đình, cảm xúc">👨‍👩‍👧 Gia đình, cảm xúc</option>
+                <option value="Khoa học, công nghệ">🔬 Khoa học, công nghệ</option>
+                <option value="Môn học">📐 Môn học</option>
+                <option value="Tiếng kêu">🐓 Tiếng kêu</option>
+                <option value="Từ trái nghĩa">⚖️ Từ trái nghĩa</option>
+                <option value="Bài hát thiếu nhi">🎶 Bài hát thiếu nhi</option>
+                <option value="custom">✏️ Chỉ dùng câu hỏi tự soạn bên dưới</option>
+              </select>
+            </div>
+            <div class="field">
+              <label>Thời gian trả lời mỗi câu <span class="val" id="v-lopQuestionSec"></span></label>
+              <input type="range" min="10" max="60" step="5" data-o="lopQuestionSec" data-num>
+            </div>
+            <div class="toggles" style="margin-top:8px">
+              <label class="toggle"><span>Bắt buộc gõ đầy đủ dấu tiếng Việt (mặc định tắt để điện thoại gõ không dấu vẫn nhận đáp án)</span><input type="checkbox" data-o="lopRequireTone"><i></i></label>
+              <label class="toggle"><span>Xen kẽ 4 bài Toán tính nhẩm ở câu 5, 10, 15, 19</span><input type="checkbox" data-o="lopMathEnabled"><i></i></label>
+              <label class="toggle"><span>Tự cộng +10 giây &amp; mở 1 chữ gợi ý khi hết giờ chưa ai giải ra</span><input type="checkbox" data-o="lopAutoHint"><i></i></label>
+              <label class="toggle"><span>Giọng Cô Giáo Hoài My + phát âm tiếng Anh chuẩn</span><input type="checkbox" data-o="lopVoice"><i></i></label>
+              <label class="toggle"><span>Cô Giáo chào bạn mới &amp; khen chuỗi điểm danh nhiều ngày liền</span><input type="checkbox" data-o="lopGreet"><i></i></label>
+            </div>
+            <div class="field">
+              <label>Tốc độ giọng Cô Giáo <span class="val" id="v-lopRate"></span></label>
+              <input type="range" min="0.7" max="1.35" step="0.05" data-o="lopRate" data-num>
+            </div>
+            <div class="field">
+              <label>Mốc tim (đã nhân ×5) để cả lớp vỗ tay ăn mừng</label>
+              <input type="number" class="inp" min="50" step="50" data-o="lopLikeGoal" data-num>
+            </div>
+            <div class="field">
+              <label>Tự rời lớp khi im lặng lâu <span class="val" id="v-lopIdleMin"></span></label>
+              <input type="range" min="0" max="60" step="5" data-o="lopIdleMin" data-num>
+              <p class="hint">Mặc định <b>Chỉ khi rời live</b>: học sinh giữ chỗ suốt buổi học; sang tiết mới điểm tiết làm lại từ đầu để ai cũng có cơ hội giành ngôi 👑 Lớp Trưởng!</p>
+            </div>
+          </div>
+
+          <div class="panel">
+            <div class="panel-head"><h2>Kho Câu Hỏi Tự Thêm</h2></div>
+            <p class="hint" style="margin:0 0 8px">Mỗi dòng nhập theo mẫu <b>Đáp án | Gợi ý câu đố | Chủ đề</b> (hoặc <b>Chủ đề | Đáp án</b>).</p>
+            <textarea class="inp" id="lop-custom-words" rows="4" placeholder="BÁNH CHƯNG | Bánh vuông gói lá dong ăn ngày Tết cổ truyền. | Lễ Tết&#10;HOA PHƯỢNG | Loài hoa nở đỏ rực sân trường mỗi dịp hè về. | Trường lớp"></textarea>
+            <div class="file-row" style="margin-top:8px">
+              <button class="btn primary sm" id="lop-words-save">💾 Lưu câu hỏi tự thêm</button>
+              <span class="muted small">Tự động gộp vào kho câu hỏi từ tiết kế tiếp.</span>
+            </div>
+          </div>
+
+          <div class="panel">
+            <div class="panel-head"><h2>Nhạc nền Lớp Học &amp; Link Nhạc</h2></div>
+            <div class="amb-grid" id="lop-soundscape">
+              <button data-lsc="off"><b>🔇 Tắt nhạc nền (Chuẩn Lớp Học Chữ)</b><span>Giọng Cô Giáo rõ nét, chỉ giữ trống trường &amp; hiệu ứng</span></button>
+              <button data-lsc="melody"><b>🎹 Kalimba Học Trò</b><span>Trong trẻo, vui tươi sạch bản quyền</span></button>
+              <button data-lsc="lofi"><b>☕ Piano Lofi Học Bài</b><span>Hợp âm êm dịu dễ tập trung</span></button>
+              <button data-lsc="custom"><b>🔗 Link nhạc / MP3 riêng</b><span>YouTube, SoundCloud hoặc file máy</span></button>
+            </div>
+            <div class="field" id="lop-custom-row">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+                <label style="margin:0">Điền link nhạc hoặc chọn file trên máy</label>
+                <button class="btn ghost sm" id="lop-music-file-add">+ Chọn file máy</button>
+              </div>
+              <div class="file-row" style="margin-bottom:10px">
+                <input class="inp" id="lop-music-link" placeholder="Dán link YouTube hoặc link .mp3 / .m4a...">
+                <button class="btn primary sm" id="lop-music-link-add">+ Thêm link</button>
+              </div>
+              <ol class="movie-list" id="lop-music-list"></ol>
+              <div class="movie-empty" id="lop-music-empty">Chưa có bài nhạc riêng. Dán link YouTube / .mp3 hoặc bấm <b>+ Chọn file máy</b>.</div>
+              <div class="movie-ctrl" style="margin-bottom:10px">
+                <button class="btn ghost sm" data-lop="prevMusic">⏮ Bài trước</button>
+                <button class="btn primary sm" data-lop="playMusic">▶ Phát</button>
+                <button class="btn ghost sm" data-lop="pauseMusic">⏸ Dừng</button>
+                <button class="btn ghost sm" data-lop="nextMusic">Bài sau ⏭</button>
+              </div>
+              <label class="toggle"><span>Hết danh sách nhạc thì phát lặp lại</span><input type="checkbox" data-o="lopMusicLoop"><i></i></label>
+            </div>
+            <div class="field" id="lop-vol-field">
+              <label>Âm lượng nhạc nền <span class="val" id="v-lopMusicVolume"></span></label>
+              <input type="range" min="0" max="1" step="0.05" data-o="lopMusicVolume" data-num>
+            </div>
+          </div>
+
+          <div class="panel">
+            <div class="panel-head"><h2>Giả Lập &amp; Nhập Thử Đáp Án</h2></div>
+            <div class="file-row" style="margin-bottom:10px">
+              <input class="inp" id="lop-test-chat" maxlength="120" placeholder="Gõ thử đáp án (có dấu hoặc không dấu) hoặc bình luận bất kỳ rồi bấm Enter...">
+              <button class="btn primary sm" id="lop-test-send">💬 Gửi thử</button>
+              <button class="btn ghost sm" data-test="join">🎒 +1 Học sinh vào lớp</button>
+            </div>
+            <div class="test-grid">
+              <button class="btn primary" data-lop="answerCorrect">✅ 1 bạn trả lời ĐÚNG ngay</button>
+              <button class="btn primary" data-lop-flood="50">👥 50 người cùng vào đoán</button>
+              <button class="btn ghost" data-lop-flood="200">🔥 200 người đông nghẹt cửa lớp</button>
+              <button class="btn ghost" data-test="chat">💬 Bình luận trò chuyện</button>
+              <button class="btn ghost" data-test="lopWrong">❌ Đoán sai</button>
+              <button class="btn ghost" data-test="lopSkin">💇 Gõ “đổi kiểu” tóc</button>
+              <button class="btn ghost" data-test="gift">💐 Tặng hoa lên bục (10💎)</button>
+              <button class="btn ghost" data-test="bigGift">💡 Tặng quà lớn mở chữ cứu lớp (299💎)</button>
+              <button class="btn ghost" data-lop="testLikes">❤️ Bão tim cả lớp vỗ tay</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= SETTINGS ================= -->
+    <section class="view" id="view-settings">
+      <header class="page-head">
+        <div>
+          <h1>Cài đặt</h1>
+          <p class="muted">Cài đặt dùng chung cho mọi cảnh. Lưu tự động.</p>
+        </div>
+      </header>
+
+      <div class="settings-grid">
+        <div class="panel">
+          <div class="panel-head"><h2>Hình ảnh khi live</h2></div>
+          <div class="field" style="margin-top:0">
+            <label>Độ tươi màu khi live <span class="val" id="v-liveBoost"></span></label>
+            <input type="range" min="0" max="40" step="5" data-o="liveBoost" data-num>
+            <p class="hint">TikTok nén video làm màu nhạt và tối đi. Tăng mức này để bù lại; 10–20% là vừa. Đặt 0% nếu thấy màu bị gắt.</p>
+          </div>
+          <p class="hint">Mọi chữ, bảng điểm, nhân vật đã được đặt trong <b>vùng an toàn</b>: chừa phần trên (thanh TikTok), phần dưới (bình luận) và hai mép (bị cắt trên điện thoại dài). Bật ô <b>📱 Vùng bị TikTok che</b> dưới khung xem cảnh để kiểm tra.</p>
+        </div>
+
+        <div class="panel">
+          <div class="panel-head"><h2>Âm thanh chung</h2></div>
+          <div class="toggles">
+            <label class="toggle"><span>Bật âm thanh hiệu ứng</span><input type="checkbox" data-o="sound"><i></i></label>
+          </div>
+<div class="field">
+            <label>Âm lượng <span class="val" id="v-volume"></span></label>
+            <input type="range" min="0" max="1" step="0.05" data-o="volume" data-num>
+          </div>
+<div class="field">
+            <label>Ẩn bình luận chứa từ (ngăn cách bằng dấu phẩy)</label>
+            <input type="text" class="inp" data-o="filterWords" placeholder="vd: link, spam, quảng cáo">
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-head"><h2>Kết nối TikTok</h2></div>
+          <label class="toggle"><span>Tự động kết nối lại khi rớt mạng</span><input type="checkbox" id="autoReconnect"><i></i></label>
+          <div class="field">
+            <label>Tài khoản TikTok <span class="muted small">(không bắt buộc)</span></label>
+            <p class="hint" style="margin:0 0 8px">App tự mở trang live TikTok trong trình duyệt ẩn và đọc bình luận/quà ngay trên máy. Dữ liệu chỉ đi giữa máy bạn và TikTok.</p>
+            <div class="file-row" id="login-row">
+              <button class="btn ghost sm" id="btn-tt-login">Đăng nhập TikTok</button>
+              <button class="btn ghost sm" id="btn-tt-logout">Đăng xuất</button>
+              <span class="muted small">Không bắt buộc — chỉ cần khi TikTok đòi xác minh.</span>
+            </div>
+          </div>
+          <details class="adv">
+            <summary>Nâng cao</summary>
+            
+            <div class="field">
+            <label>Cổng server overlay</label>
+            <div class="file-row">
+              <input type="number" class="inp" id="port" min="1024" max="65535" style="max-width:140px">
+              <button class="btn ghost sm" id="btn-apply-port">Áp dụng</button>
+            </div>
+          </div>
+            
+          </details>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div class="toast-host" id="toast-host"></div>
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,15 @@
+# Thư mục thư viện
+node_modules/
+
+# File đóng gói (dmg, zip, exe nặng >100MB) — đăng lên GitHub Releases thay vì commit
+dist/
+out/
+*.dmg
+*.exe
+*.zip
+*.blockmap
+
+# File hệ thống & log
+.DS_Store
+Thumbs.db
+*.log

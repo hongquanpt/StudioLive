@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>StudioLive Overlay</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@600;700;800&family=Noto+Serif:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="overlay.css">
+  <script src="/socket.io/socket.io.js"></script>
+</head>
+<body>
+  <div id="stage">
+    <div id="bg"><canvas id="fx"></canvas><div class="fog f1"></div><div class="fog f2"></div><div class="vignette"></div></div>
+
+    <canvas id="game"></canvas>
+    <canvas id="temple"></canvas>
+    <canvas id="bar"></canvas>
+    <canvas id="rap"></canvas>
+    <canvas id="lop"></canvas>
+
+    <div id="lop-ui">
+      <div class="l-toasts"></div>
+      <div class="l-plate"><div class="np-av"></div><div class="np-body"><div class="np-name"></div><div class="np-gift"></div></div></div>
+      <div class="l-caption"></div>
+    </div>
+
+    <div id="bar-ui">
+      <div class="b-welcome"><div class="bw-av"></div><div class="bw-text"></div></div>
+      <div class="b-like"><div class="b-like-fill"></div><span class="b-like-text"></span></div>
+      <div class="b-couple"><div class="bc-head">💞 GHÉP ĐÔI THÀNH CÔNG</div><div class="bc-names"></div></div>
+      <div class="b-plate"><div class="np-av"></div><div class="np-body"><div class="np-name"></div><div class="np-gift"></div></div></div>
+      <div class="b-fx-toast"><span class="bft-ico"></span><span class="bft-text"></span></div>
+      <div class="b-caption"></div>
+      <div class="b-menu"></div>
+    </div>
+
+    <div id="rap-ui">
+      <div class="r-head"><span class="r-title"></span><span class="r-now"></span></div>
+      <div class="r-caption"></div>
+      <div class="r-like"><div class="r-like-fill"></div><span class="r-like-text"></span></div>
+      <div class="r-board"><div class="rb-title">🍿 TOP KHÁN GIẢ</div><div class="rb-list"></div><div class="rb-empty">Bình luận để lên bảng</div></div>
+      <div class="r-cmd">
+        <div class="cmd"><span class="key">vỗ tay</span>👏</div>
+        <div class="cmd"><span class="key">haha</span>😂</div>
+        <div class="cmd"><span class="key">wow</span>😮</div>
+        <div class="cmd"><span class="key">bắp</span>🍿</div>
+        <div class="cmd gift"><span class="key">🎁</span>ghế VIP</div>
+      </div>
+      <div class="r-plate"><div class="np-av"></div><div><div class="np-name"></div><div class="np-gift"></div></div></div>
+    </div>
+
+    <div id="temple-ui">
+      <div class="t-head">
+        <div class="t-plaque">
+          <div class="t-title-wrap">
+            <div class="t-title"></div>
+            <div class="t-sub">Nam Mô A Di Đà Phật</div>
+          </div>
+          <div class="t-online">🙏 0 hiện diện</div>
+        </div>
+        <div class="t-like"><div class="t-like-fill"></div><span class="t-like-text"></span></div>
+      </div>
+
+      <div class="t-board">
+        <div class="tb-title">🪷 BẢNG THÀNH TÂM</div>
+        <div class="tb-list"></div>
+        <div class="tb-empty">Gõ bình luận để lưu danh</div>
+      </div>
+
+      <div class="t-wish">
+        <div class="tw-head">📜 SỚ CẦU AN</div>
+        <div class="tw-user"></div>
+        <div class="tw-wish"></div>
+        <div class="tw-bless"></div>
+      </div>
+
+      <div class="t-plate"><div class="np-av"></div><div class="np-body"><div class="np-name"></div><div class="np-gift"></div></div></div>
+      <div class="t-fx-toast"><span class="tft-ico"></span><span class="tft-text"></span></div>
+      <div class="t-welcome"><div class="twc-av"></div><div class="twc-text"></div></div>
+      <div class="t-caption"></div>
+
+      <div class="t-cmd">
+        <div class="t-cmd-row">
+          <div class="cmd"><span class="key">adidaphat</span>dâng hương</div>
+          <div class="cmd"><span class="key">thỉnh chuông</span>rung chuông</div>
+          <div class="cmd wish"><span class="key">hoa sen</span>nở sen</div>
+          <div class="cmd skin"><span class="key">nam·nữ·bà·sư·ni·tiểu</span>đổi người</div>
+        </div>
+        <div class="t-note">Không gian thư giãn giải trí · Vào phòng hoá Phật tử · Quà tặng nhận lời chúc an lành 🪷</div>
+      </div>
+    </div>
+
+    <div id="game-ui">
+      <div id="g-board">
+        <div class="lb-title">👻 THÁNH HÙ</div>
+        <div class="lb-list"></div>
+        <div class="lb-empty">Gõ <b>HÙ</b> để ghi điểm!</div>
+      </div>
+      <div id="g-feed"></div>
+      <div id="g-banner"><div class="b-title"></div><div class="b-sub"></div></div>
+      <div id="g-peek"><div class="pk-face"></div></div>
+      <div id="g-howto">
+        <div class="ht-head"><span>👻 CÁCH CHƠI · gõ vào bình luận</span><span class="ht-step"></span></div>
+        <div class="ht-body">
+          <div class="ht-ico"></div>
+          <div class="ht-cmd"></div>
+          <div class="ht-desc"></div>
+        </div>
+        <div class="ht-dots"></div>
+      </div>
+      <div id="g-cmd">
+        <div class="cmd-label">💬 GÕ VÀO BÌNH LUẬN ĐỂ CHƠI</div>
+        <div class="cmd-row">
+          <div class="cmd"><span class="key">hù</span>hù người khác</div>
+          <div class="cmd"><span class="key">trốn</span>nấp đi</div>
+          <div class="cmd"><span class="key">tìm</span>soi đèn pin</div>
+        </div>
+        <div class="cmd-row rot" id="cmd-rot"></div>
+      </div>
+      <div id="g-jumpscare">
+        <div class="js-stage">
+          <div class="js-face"></div>
+          <img class="js-media" alt="">
+          <video class="js-media" playsinline></video>
+        </div>
+        <canvas class="js-noise" width="135" height="240"></canvas>
+        <div class="js-vignette"></div>
+        <div class="js-text"></div>
+      </div>
+    </div>
+
+    <div id="hud">
+      <div class="pill" id="pill-likes"><span class="ico">❤</span><span id="likes">0</span></div>
+      <div class="pill" id="pill-viewers"><span class="ico">👁</span><span id="viewers">0</span></div>
+    </div>
+    <div id="top-gifter" class="hidden">
+      <div class="crown">👑</div>
+      <img id="tg-avatar" alt="">
+      <div class="tg-text"><div class="tg-label">Đại gia đêm nay</div><div id="tg-name"></div></div>
+      <div class="tg-coins"><span id="tg-coins">0</span> 💎</div>
+    </div>
+
+    <div id="toasts"></div>
+    <div id="gift-zone"></div>
+    <div id="streak-zone"></div>
+    <div id="chat-zone"></div>
+    <div id="offline" class="hidden">Đang chờ kết nối StudioLive…</div>
+    <div id="paused-badge">⏸ Tạm dừng</div>
+    <div id="safe-guide">
+      <div class="sg-top">Thanh trên của TikTok che</div>
+      <div class="sg-bottom">Bình luận + nút quà của TikTok che</div>
+      <div class="sg-left">Bị cắt trên điện thoại dài</div>
+      <div class="sg-right">Bị cắt trên điện thoại dài</div>
+    </div>
+  </div>
+  <script src="faces.js"></script>
+  <script src="audio.js"></script>
+  <script src="game.js"></script>
+  <script src="temple.js"></script>
+  <script src="bar.js"></script>
+  <script src="rap.js"></script>
+  <script src="lop-data.js"></script>
+  <script src="lop.js"></script>
+  <script src="overlay.js"></script>
+</body>
+</html>
